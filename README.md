@@ -4,3 +4,4 @@
 
 ## Requirements
 - Java 8
+- `$ gradlew setDecompWorkspace idea`
