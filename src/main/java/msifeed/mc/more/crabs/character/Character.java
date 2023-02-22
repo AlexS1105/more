@@ -25,7 +25,10 @@ public class Character {
 
     public boolean visibleOnMap = true;
 
+    public transient boolean loadedFromCrust = false;
+
     public Character() {
+        System.out.println("CRUST init");
         for (Ability f : Ability.values())
             abilities.put(f, 7);
     }
@@ -43,6 +46,7 @@ public class Character {
         estitence = c.estitence;
         sin = c.sin;
         visibleOnMap = c.visibleOnMap;
+        loadedFromCrust = c.loadedFromCrust;
     }
 
     public Set<Trait> traits() {

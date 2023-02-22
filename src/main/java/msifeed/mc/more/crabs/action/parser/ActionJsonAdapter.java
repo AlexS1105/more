@@ -35,7 +35,7 @@ public class ActionJsonAdapter implements JsonSerializer<Action>, JsonDeserializ
         if (raw.title == null)
             throw new JsonParseException("Action `" + raw.id + "` has no `title` field!");
 
-        final Action action = new Action(raw.id, raw.title);
+        final Action action = new Action(raw.id.intern(), raw.title.intern());
 
         if (raw.tags == null)
             throw new JsonParseException("Action `" + raw.id + "` has no `tags` field!");

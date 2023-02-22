@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class DBHandler {
-    private final Logger LOGGER = LogManager.getLogger("Aorta.Logs");
+    private final Logger LOGGER = LogManager.getLogger("More.Logs");
     private JsonConfig<ConfigSection> config = ConfigBuilder.of(ConfigSection.class, "database.json")
             .addAdapter(ZoneId.class, new ZoneIdAdapter())
             .create();

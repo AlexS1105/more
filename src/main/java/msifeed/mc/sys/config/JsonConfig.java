@@ -7,9 +7,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.lang.reflect.Constructor;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 public class JsonConfig<T> {
-    private static final Logger LOGGER = LogManager.getLogger("Aorta.Config");
+    private static final Logger LOGGER = LogManager.getLogger("More.Config");
 
     private final TypeToken<T> type;
     private final String filename;
@@ -78,7 +80,7 @@ public class JsonConfig<T> {
             return getDefaultConfig();
 
         try {
-            return gson.fromJson(new FileReader(filepath), type.getType());
+            return gson.fromJson(Files.newBufferedReader(filepath.toPath(), StandardCharsets.UTF_8), type.getType());
         } catch (IOException e) {
             LOGGER.error("Error while reading '{}' config: {}", filename, e.getMessage());
             throw new Exception("Failed to read config file: '" + filename  + "'");

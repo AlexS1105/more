@@ -27,7 +27,7 @@ public class Genesis {
             .put(GenesisTrait.item, new ItemGenerator())
             .build();
 
-    private static Logger log = LogManager.getLogger("Aorta.Gen");
+    private static Logger log = LogManager.getLogger("More.Gen");
     private static boolean abortLoading = false;
 
     public void init() {

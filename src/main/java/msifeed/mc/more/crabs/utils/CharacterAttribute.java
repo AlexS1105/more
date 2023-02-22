@@ -46,15 +46,18 @@ public class CharacterAttribute extends EntityLivingAttribute<Character> {
 
     @Override
     public void saveNBTData(Character character, NBTTagCompound root) {
-        if (character == null)
-            return;
+        if (character == null) return;
+
+        System.out.println("CRUST saveNBTData");
         root.setTag(PROP_NAME, character.toNBT());
     }
 
     @Override
     public Character loadNBTData(Character value, NBTTagCompound root) {
-        if (!root.hasKey(PROP_NAME))
-            return null;
+        if (!root.hasKey(PROP_NAME)) return null;
+        if (value == null || !value.loadedFromCrust) return null;
+
+        System.out.println("CRUST loadNBTData");
         final Character character = new Character();
         character.fromNBT(root.getCompoundTag(PROP_NAME));
         return character;

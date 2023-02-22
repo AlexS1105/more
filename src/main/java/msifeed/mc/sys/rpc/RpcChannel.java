@@ -14,10 +14,10 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sun.reflect.Reflection;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -78,7 +78,7 @@ public class RpcChannel {
                 continue;
             final String methodName = m.getAnnotation(RpcMethodHandler.class).value();
 
-            if (!m.isAccessible() && !Reflection.quickCheckMemberAccess(clazz, m.getModifiers()))
+            if (!m.isAccessible() && !Modifier.isPublic(m.getModifiers()))
                 throw new RuntimeException(String.format("RPC method '%s::%s' is not accessible", clazz.getName(), m.getName()));
 
             final Class<?>[] types = m.getParameterTypes();

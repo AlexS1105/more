@@ -36,18 +36,20 @@ tasks.withType(JavaCompile) {
 }
 
 configurations {
-    shade
-    compile.extendsFrom shade
+    embed
+    compile.extendsFrom embed
 }
 
 dependencies {
     runtime 'mysql:mysql-connector-java:5.1.14'
-    shade 'com.zaxxer:HikariCP:3.3.1'
+    embed 'com.zaxxer:HikariCP:3.3.1'
+    embed 'org.mongodb:mongodb-driver-sync:4.2.2'
+
     testCompile 'junit:junit:4.12'
 }
 
 jar {
-    configurations.shade.each { dep ->
+    configurations.embed.each { dep ->
         from(project.zipTree(dep)) {
             exclude 'META-INF', 'META-INF/**'
         }

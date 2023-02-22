@@ -30,6 +30,7 @@ import msifeed.mc.more.commands.MoreCommand;
 import msifeed.mc.more.commands.RollCommand;
 import msifeed.mc.more.content.MoreItems;
 import msifeed.mc.more.crabs.Crabs;
+import msifeed.mc.more.crabs.crust.CrustSync;
 import msifeed.mc.more.tools.ToolItems;
 import msifeed.mc.sys.rpc.RpcChannel;
 import net.minecraft.command.CommandHandler;
@@ -55,6 +56,7 @@ public class More {
     private Speechat speechat = new Speechat();
     private Locks locks = new Locks();
     private TempInvulnerability invulnerability = new TempInvulnerability();
+    private CrustSync crustSync = new CrustSync();
 
     public void preInit() {
         crabs.preInit();
