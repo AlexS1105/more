@@ -1,20 +1,17 @@
-package msifeed.mc.more.crabs.tags;
+package msifeed.mc.extensions.tags;
 
 import com.google.gson.reflect.TypeToken;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 import msifeed.mc.sys.config.ConfigBuilder;
 import msifeed.mc.sys.config.JsonConfig;
 import msifeed.mc.sys.utils.ChatUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import org.lwjgl.input.Keyboard;
-import scala.swing.event.Key;
 
 import java.util.ArrayList;
 import java.util.HashMap;

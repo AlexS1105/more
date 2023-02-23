@@ -14,7 +14,7 @@ import msifeed.mc.mellow.widgets.text.Label;
 import msifeed.mc.mellow.widgets.text.TextInput;
 import msifeed.mc.mellow.widgets.text.TextInputArea;
 import msifeed.mc.mellow.widgets.window.Window;
-import msifeed.mc.more.crabs.tags.client.ScreenTagEditor;
+import msifeed.mc.extensions.tags.client.ScreenTagEditor;
 import msifeed.mc.more.crabs.utils.CharacterAttribute;
 import msifeed.mc.sys.utils.ChatUtils;
 import msifeed.mc.sys.utils.L10n;

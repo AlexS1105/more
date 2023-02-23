@@ -1,5 +1,6 @@
-package msifeed.mc.more.crabs.tags.client;
+package msifeed.mc.extensions.tags.client;
 
+import msifeed.mc.extensions.tags.Tags;
 import msifeed.mc.mellow.layout.GridLayout;
 import msifeed.mc.mellow.layout.ListLayout;
 import msifeed.mc.mellow.utils.SizePolicy;
@@ -8,14 +9,12 @@ import msifeed.mc.mellow.widgets.button.Button;
 import msifeed.mc.mellow.widgets.button.ButtonLabel;
 import msifeed.mc.mellow.widgets.droplist.DropList;
 import msifeed.mc.mellow.widgets.text.Label;
-import msifeed.mc.more.crabs.tags.Tags;
-import msifeed.mc.more.crabs.tags.TagsRpc;
+import msifeed.mc.extensions.tags.TagsRpc;
 import msifeed.mc.sys.utils.L10n;
 import net.minecraft.item.ItemStack;
 import scala.actors.threadpool.Arrays;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ScreenTagEditor extends Widget {
 

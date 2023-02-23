@@ -1,11 +1,12 @@
-package msifeed.mc.more.crabs.tags;
+package msifeed.mc.extensions.tags;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TagProvider {
+public class TagsProvider {
     public static void setTags(ItemStack itemStack, NBTTagCompound nbt) {
         NBTTagCompound tagCompound;
+
         if (!itemStack.hasTagCompound()) {
             tagCompound = new NBTTagCompound();
         } else {

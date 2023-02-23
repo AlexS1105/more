@@ -1,4 +1,4 @@
-package msifeed.mc.more.crabs.tags;
+package msifeed.mc.extensions.tags;
 
 import java.util.List;
 

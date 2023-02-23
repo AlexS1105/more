@@ -31,7 +31,7 @@ import msifeed.mc.more.commands.RollCommand;
 import msifeed.mc.more.content.MoreItems;
 import msifeed.mc.more.crabs.Crabs;
 import msifeed.mc.more.crabs.crust.CrustSync;
-import msifeed.mc.more.crabs.tags.TagsRpc;
+import msifeed.mc.extensions.tags.TagsRpc;
 import msifeed.mc.more.tools.ToolItems;
 import msifeed.mc.sys.rpc.RpcChannel;
 import net.minecraft.command.CommandHandler;

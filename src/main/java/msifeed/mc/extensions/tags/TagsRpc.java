@@ -1,7 +1,6 @@
-package msifeed.mc.more.crabs.tags;
+package msifeed.mc.extensions.tags;
 
 import msifeed.mc.Bootstrap;
-import msifeed.mc.extensions.rename.RenameProvider;
 import msifeed.mc.more.More;
 import msifeed.mc.sys.rpc.RpcContext;
 import msifeed.mc.sys.rpc.RpcMethodHandler;
@@ -40,6 +39,6 @@ public enum TagsRpc {
         if (itemStack == null)
             return;
 
-       TagProvider.setTags(itemStack, nbt);
+       TagsProvider.setTags(itemStack, nbt);
     }
 }
