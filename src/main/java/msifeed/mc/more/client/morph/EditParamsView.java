@@ -57,5 +57,13 @@ class EditParamsView extends Widget {
         sinInput.setFilter(s -> TextInput.isUnsignedIntBetween(s, -1, 100));
         sinInput.setCallback(s -> character.sin = sinInput.getInt());
         addChild(sinInput);
+
+        addChild(new Label("Health"));
+        final TextInput healthInput = new TextInput();
+        healthInput.getSizeHint().x = 30;
+        healthInput.setText(String.valueOf(character.healthMod));
+        healthInput.setFilter(TextInput::isUnsignedFloat);
+        healthInput.setCallback(s -> character.healthMod = healthInput.getFloat());
+        addChild(healthInput);
     }
 }

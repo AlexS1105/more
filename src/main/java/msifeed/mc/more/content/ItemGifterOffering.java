@@ -1,7 +1,7 @@
 package msifeed.mc.more.content;
 
 import msifeed.mc.Bootstrap;
-import msifeed.mc.extensions.tweaks.EsitenceHealthModifier;
+import msifeed.mc.extensions.tweaks.HealthModifier;
 import msifeed.mc.genesis.GenesisCreativeTab;
 import msifeed.mc.more.More;
 import msifeed.mc.more.crabs.character.Character;
@@ -71,12 +71,12 @@ class ItemGifterOffering extends Item {
         CharacterAttribute.INSTANCE.set(player, playerAfter);
         Differ.printDiffs((EntityPlayerMP)player, player, playerBefore, playerAfter);
         if (playerBefore.countMaxHealth() != playerAfter.countMaxHealth())
-            EsitenceHealthModifier.applyModifier(player, playerAfter);
+            HealthModifier.applyModifier(player, playerAfter);
 
         CharacterAttribute.INSTANCE.set(target, targetAfter);
         Differ.printDiffs((EntityPlayerMP)target, target, targetBefore, targetAfter);
         if (targetBefore.countMaxHealth() != targetAfter.countMaxHealth())
-            EsitenceHealthModifier.applyModifier(target, targetAfter);
+            HealthModifier.applyModifier(target, targetAfter);
 
         return true;
     }

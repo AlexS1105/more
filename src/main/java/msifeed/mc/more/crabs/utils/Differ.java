@@ -112,10 +112,10 @@ public class Differ {
         if (before.illness.debuff() != after.illness.debuff())
             diffs.add(L10n.fmt("more.diff.status.illness.debuff", after.illness.debuff()));
 
-        final int hpBefore = before.countMaxHealth();
-        final int hpAfter = after.countMaxHealth();
+        final float hpBefore = before.countMaxHealth();
+        final float hpAfter = after.countMaxHealth();
         if (hpBefore != hpAfter) {
-            final int n = Math.abs(hpBefore - hpAfter);
+            final float n = Math.abs(hpBefore - hpAfter);
             diffs.add(L10n.fmt(
                     hpBefore < hpAfter ? "more.diff.status.add_max_health" : "more.diff.status.rem_max_health", n
             ));

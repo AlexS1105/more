@@ -1,6 +1,8 @@
 package msifeed.mc.more.crabs.character;
 
+import msifeed.mc.commons.defines.Defines;
 import msifeed.mc.commons.traits.Trait;
+import msifeed.mc.more.More;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.EnumMap;
@@ -22,10 +24,11 @@ public class Character {
 
     public int estitence = 62;
     public int sin = 0;
-
     public boolean visibleOnMap = true;
 
     public transient boolean loadedFromCrust = false;
+
+    public float healthMod = 0;
 
     public Character() {
         System.out.println("CRUST init");
@@ -47,6 +50,7 @@ public class Character {
         sin = c.sin;
         visibleOnMap = c.visibleOnMap;
         loadedFromCrust = c.loadedFromCrust;
+        healthMod = c.healthMod;
     }
 
     public Set<Trait> traits() {
@@ -57,8 +61,14 @@ public class Character {
         return traits.contains(trait);
     }
 
-    public int countMaxHealth() {
-        return Math.max((estitence - 20) / 2, 1);
+    public float countMaxHealth() {
+        final StatDefines config = More.DEFINES.stats();
+        final float enduranceHealthMod = abilities.get(Ability.END) * config.healthPerEndurance;
+        final float determinationHealthMod = abilities.get(Ability.DET) * config.healthPerDetermination;
+        return Math.max(1, (estitence - 20) * 0.5f
+                + enduranceHealthMod
+                + determinationHealthMod
+                + healthMod);
     }
 
     public int sinLevel() {
@@ -88,6 +98,10 @@ public class Character {
 
         c.setBoolean(Tags.visibleOnMap, visibleOnMap);
 
+        c.setFloat(Tags.healthMod, healthMod);
+
+        c.setBoolean(Tags.loadedFromCrust, loadedFromCrust);
+
         return c;
     }
 
@@ -113,6 +127,9 @@ public class Character {
             visibleOnMap = c.getBoolean(Tags.visibleOnMap);
         else
             visibleOnMap = true;
+
+        healthMod = c.getFloat(Tags.healthMod);
+        loadedFromCrust = c.getBoolean(Tags.loadedFromCrust);
     }
 
     private static class Tags {
@@ -127,5 +144,7 @@ public class Character {
         static final String estitence = "estitence";
         static final String sin = "sin";
         static final String visibleOnMap = "visibleOnMap";
+        static final String healthMod = "healthMod";
+        static final String loadedFromCrust = "loadedFromCrust";
     }
 }

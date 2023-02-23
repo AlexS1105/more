@@ -6,7 +6,7 @@ import msifeed.mc.commons.logs.ExternalLogs;
 import msifeed.mc.commons.traits.Trait;
 import msifeed.mc.extensions.chat.SpeechatRpc;
 import msifeed.mc.extensions.chat.formatter.MiscFormatter;
-import msifeed.mc.extensions.tweaks.EsitenceHealthModifier;
+import msifeed.mc.extensions.tweaks.HealthModifier;
 import msifeed.mc.more.More;
 import msifeed.mc.more.crabs.rolls.Modifiers;
 import msifeed.mc.more.crabs.rolls.Rolls;
@@ -71,8 +71,8 @@ public enum CharRpc {
                     More.RPC.sendToAll(refreshName, entityId);
                 }
 
-                if (before.estitence != after.estitence) {
-                    EsitenceHealthModifier.applyModifier((EntityPlayer) target, after);
+                if (before.countMaxHealth() != after.countMaxHealth()) {
+                    HealthModifier.applyModifier((EntityPlayer) target, after);
                 }
             }
         } else {

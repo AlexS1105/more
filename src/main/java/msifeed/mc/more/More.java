@@ -68,7 +68,7 @@ public class More {
 
         RemoteBookManager.preInit();
         RenameRpc.preInit();
-        EsitenceHealthModifier.preInit();
+        HealthModifier.preInit();
         NoclipRpc.preInit();
         Nametag.preInit();
         EnvironmentManager.preInit();
