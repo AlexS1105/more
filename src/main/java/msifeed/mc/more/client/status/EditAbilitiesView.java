@@ -10,9 +10,11 @@ import msifeed.mc.more.crabs.character.Character;
 
 public class EditAbilitiesView extends Widget {
     private final Character character;
+    public final boolean editable;
 
-    public EditAbilitiesView(Character character) {
+    public EditAbilitiesView(Character character, boolean editable) {
         this.character = character;
+        this.editable = editable;
 
         setLayout(new GridLayout());
         refill();
@@ -35,13 +37,20 @@ public class EditAbilitiesView extends Widget {
         label.getPos().y = 1;
         pair.addChild(label);
 
-        final TextInput input = new TextInput();
-        input.getSizeHint().x = 16;
-
         final int abilityValue = character.abilities.getOrDefault(a, 0);
-        input.setText(Integer.toString(abilityValue));
-        input.setFilter(s -> TextInput.isSignedIntBetween(s, 1, 99));
-        input.setCallback(s -> character.abilities.put(a, s.isEmpty() ? 1 : Integer.parseInt(s)));
-        pair.addChild(input);
+
+        if (this.editable) {
+            final TextInput input = new TextInput();
+            input.getSizeHint().x = 16;
+
+            input.setText(Integer.toString(abilityValue));
+            input.setFilter(s -> TextInput.isSignedIntBetween(s, 1, 99));
+            input.setCallback(s -> character.abilities.put(a, s.isEmpty() ? 1 : Integer.parseInt(s)));
+            pair.addChild(input);
+        } else {
+            final Label valueLabel = new Label(Integer.toString(abilityValue));
+            valueLabel.getSizeHint().x = 16;
+            pair.addChild(valueLabel);
+        }
     }
 }

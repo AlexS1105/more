@@ -61,7 +61,7 @@ public class MorphScreen extends MellowGuiScreen {
             mainColumn.addChild(tabArea);
 
             tabArea.addTab("Params", new EditParamsView(character));
-            tabArea.addTab("Abilities", new EditAbilitiesView(character));
+            tabArea.addTab("Abilities", new EditAbilitiesView(character, true));
 
             if (!(entity instanceof EntityPlayer)) {
                 final ButtonLabel clearBtn = new ButtonLabel("Clear all data");
