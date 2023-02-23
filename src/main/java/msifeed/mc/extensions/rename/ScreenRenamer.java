@@ -14,6 +14,7 @@ import msifeed.mc.mellow.widgets.text.Label;
 import msifeed.mc.mellow.widgets.text.TextInput;
 import msifeed.mc.mellow.widgets.text.TextInputArea;
 import msifeed.mc.mellow.widgets.window.Window;
+import msifeed.mc.more.crabs.tags.client.ScreenTagEditor;
 import msifeed.mc.more.crabs.utils.CharacterAttribute;
 import msifeed.mc.sys.utils.ChatUtils;
 import msifeed.mc.sys.utils.L10n;
@@ -51,6 +52,12 @@ public class ScreenRenamer extends MellowGuiScreen {
         final Widget renameTab = new Widget();
         renameTab.setLayout(ListLayout.VERTICAL);
         tabs.addTab("Rename", renameTab);
+
+        final boolean isGm = CharacterAttribute.hasAny(player, Trait.gm, Trait.__admin);
+
+        if (isGm || true) {
+            tabs.addTab("Tags", new ScreenTagEditor(heldItem));
+        }
 
         renameTab.addChild(new Label(L10n.tr("more.gui.renamer.title")));
         renameTab.addChild(titleInput);
