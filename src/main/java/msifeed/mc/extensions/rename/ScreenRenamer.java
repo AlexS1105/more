@@ -55,7 +55,7 @@ public class ScreenRenamer extends MellowGuiScreen {
 
         final boolean isGm = CharacterAttribute.hasAny(player, Trait.gm, Trait.__admin);
 
-        if (isGm || true) {
+        if (isGm) {
             tabs.addTab("Tags", new ScreenTagEditor(heldItem));
         }
 
