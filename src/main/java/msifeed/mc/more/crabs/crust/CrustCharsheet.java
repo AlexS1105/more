@@ -8,6 +8,8 @@ import java.util.Map;
 public class CrustCharsheet {
     public Map<String, Integer> stats = new HashMap<>();
 
+    public int estitence;
+
     public static String ability2crust(Ability a) {
         switch (a) {
             case STR:

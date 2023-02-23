@@ -109,6 +109,8 @@ public class CrustSync {
                 final String crustKey = CrustCharsheet.ability2crust(a);
                 character.abilities.put(a, sheet.stats.getOrDefault(crustKey, 0));
             }
+
+            character.estitence = sheet.estitence;
         });
     }
 }
