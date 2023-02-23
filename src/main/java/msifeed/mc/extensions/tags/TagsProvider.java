@@ -5,15 +5,10 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TagsProvider {
     public static void setTags(ItemStack itemStack, NBTTagCompound nbt) {
-        NBTTagCompound tagCompound;
-
         if (!itemStack.hasTagCompound()) {
-            tagCompound = new NBTTagCompound();
-        } else {
-            tagCompound = itemStack.getTagCompound();
+            itemStack.stackTagCompound = new NBTTagCompound();
         }
 
-        tagCompound.setTag("tags", nbt.getTag("tags"));
-        itemStack.setTagCompound(tagCompound);
+        itemStack.stackTagCompound.setTag("tags", nbt.getTag("tags"));
     }
 }
