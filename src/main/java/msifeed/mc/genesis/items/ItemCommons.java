@@ -51,11 +51,12 @@ public class ItemCommons {
         }
 
         if (unit.durData.maxDurability > 0) {
-            if (itemStack.getItemDamage() == 1)
-                lines.add("\u00A74" + L10n.fmt("more.gen.broken"));
-            else
-                lines.add("\u00A7r" + L10n.fmt("more.gen.durability", itemStack.getItemDamage(), unit.durData.maxDurability,
-                        Math.round(((double)itemStack.getItemDamage() / unit.durData.maxDurability) * 100)));
+            lines.add("\u00A7r" + L10n.fmt("more.gen.durability",
+                    unit.durData.maxDurability - itemStack.getItemDamage(),
+                    unit.durData.maxDurability,
+                    Math.round(((unit.durData.maxDurability - (double)itemStack.getItemDamage())
+                            / unit.durData.maxDurability) * 100)));
+
         }
     }
 }

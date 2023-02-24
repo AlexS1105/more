@@ -1,5 +1,6 @@
 package msifeed.mc.genesis.items.templates;
 
+import com.google.common.collect.Multimap;
 import msifeed.mc.commons.logs.ExternalLogs;
 import msifeed.mc.extensions.chat.SpeechatRpc;
 import msifeed.mc.extensions.chat.formatter.MiscFormatter;
@@ -16,6 +17,10 @@ import msifeed.mc.more.crabs.combat.CombatNotifications;
 import msifeed.mc.more.crabs.utils.CombatAttribute;
 import msifeed.mc.sys.utils.ChatUtils;
 import msifeed.mc.sys.utils.L10n;
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
@@ -26,6 +31,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ItemTemplate extends Item implements IItemTemplate {
     private final ItemGenesisUnit unit;
@@ -33,6 +39,7 @@ public class ItemTemplate extends Item implements IItemTemplate {
     public ItemTemplate(ItemGenesisUnit unit) {
         this.unit = unit;
         setUnlocalizedName(unit.id);
+        this.setMaxDamage(unit.durData.maxDurability);
     }
 
     @Override
@@ -54,9 +61,8 @@ public class ItemTemplate extends Item implements IItemTemplate {
     }
 
     @Override
-    public int getDamage(ItemStack itemStack) {
-        final int damage = super.getDamage(itemStack);
-        return damage > 0 ? damage : unit.durData.maxDurability;
+    public int getMaxDamage(ItemStack itemStack) {
+        return unit.durData.maxDurability != 0 ? unit.durData.maxDurability : -1;
     }
 
     @Override
@@ -70,17 +76,12 @@ public class ItemTemplate extends Item implements IItemTemplate {
     }
 
     @Override
-    public boolean showDurabilityBar(ItemStack itemStack) {
-        return unit.durData.maxDurability > 0 && itemStack.getItemDamage() < unit.durData.maxDurability;
-    }
-
-    @Override
     public double getDurabilityForDisplay(ItemStack itemStack) {
-        return 1 - (double)itemStack.getItemDamage() / unit.durData.maxDurability;
+        return 1 - ((unit.durData.maxDurability - (double)itemStack.getItemDamage()) / unit.durData.maxDurability);
     }
 
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-        if (unit.durData.maxDurability > 0 && itemStack.getItemDamage() <= 1) {
+        if (unit.durData.maxDurability > 0 && itemStack.getItemDamage() >= unit.durData.maxDurability) {
             if (world.isRemote)
                 player.addChatMessage(new ChatComponentText("§4" + L10n.fmt("more.gen.broken")));
             return itemStack;
@@ -185,5 +186,49 @@ public class ItemTemplate extends Item implements IItemTemplate {
     @Override
     public ItemGenesisUnit getUnit() {
         return unit;
+    }
+
+    @Override
+    public Multimap getItemAttributeModifiers()
+    {
+        Multimap multimap = super.getItemAttributeModifiers();
+
+        if (unit.attackDamage != 0) {
+            multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", unit.attackDamage, 0));
+        }
+
+        return multimap;
+    }
+    @Override
+    public boolean getIsRepairable(ItemStack itemStack, ItemStack repairItem)
+    {
+        if (unit.repairItem != null) {
+            final Item item = repairItem.getItem();
+            final String registryName = Item.itemRegistry.getNameForObject(item);
+
+            if (Objects.equals(registryName, unit.repairItem)) {
+                return true;
+            }
+        }
+
+        return super.getIsRepairable(itemStack, repairItem);
+    }
+
+    @Override
+    public boolean hitEntity(ItemStack itemStack, EntityLivingBase entity, EntityLivingBase target)
+    {
+        itemStack.damageItem(1, target);
+        return true;
+    }
+
+    @Override
+    public boolean onBlockDestroyed(ItemStack itemStack, World world, Block block, int x, int y, int z, EntityLivingBase player)
+    {
+        if ((double)block.getBlockHardness(world, x, y, z) != 0.0D)
+        {
+            itemStack.damageItem(1, player);
+        }
+
+        return true;
     }
 }

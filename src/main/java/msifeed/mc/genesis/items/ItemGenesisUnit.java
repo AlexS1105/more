@@ -26,6 +26,8 @@ public class ItemGenesisUnit extends GenesisUnit {
     public CrabsData crabsData = new CrabsData();
     public int maxUsages = 0;
     public int specialAttackCost = 0;
+    public float attackDamage = 0;
+    public String repairItem;
 
     public ItemGenesisUnit(JsonObject json, HashSet<GenesisTrait> traits) {
         super(json, traits);
@@ -47,6 +49,9 @@ public class ItemGenesisUnit extends GenesisUnit {
 
         if (json.has(Props.usages))
             JsonUtils.consumeInt(json, Props.usages, i -> maxUsages = i);
+
+        JsonUtils.consumeFloat(json, Props.attackDamage, s -> attackDamage = s);
+        JsonUtils.consumeString(json, Props.repairItem, s -> repairItem = s);
     }
 
     private void loadDescriptionValues(JsonObject json) {
@@ -91,5 +96,7 @@ public class ItemGenesisUnit extends GenesisUnit {
         static final String crabs = "crabs";
         static final String specialAttackCost = "specialAttackCost";
         static final String sanity = "sanity";
+        static final String attackDamage = "attackDamage";
+        static final String repairItem = "repairItem";
     }
 }

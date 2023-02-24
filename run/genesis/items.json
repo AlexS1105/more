@@ -66,6 +66,11 @@
     "id": "test_transparent_dagger",
     "title": "Прозрачнотык",
     "texture": "aorta:transparent_dagger",
+    "attackDamage": 10,
+    "repairItem": "minecraft:cobblestone",
+    "durability": {
+      "maxDurability": 10
+    },
     "render": {
       "scale": 0.5,
       "offset": 0.8,
