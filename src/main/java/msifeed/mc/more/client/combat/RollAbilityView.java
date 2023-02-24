@@ -58,7 +58,7 @@ public class RollAbilityView extends Widget {
                     + String.format(" (%d)", character.abilities.get(ability) + modifiers.toAbility(ability)));
             btn.setClickCallback(() -> CharRpc.rollAbility(entity.getEntityId(), ability));
             btn.setSizePolicy(SizePolicy.Policy.MINIMUM, SizePolicy.Policy.MINIMUM);
-            btn.setSizeHint(20, 0);
+            btn.setSizeHint(50, 0);
             line.addChild(btn);
             statWidgets.put(ability, widget);
 
