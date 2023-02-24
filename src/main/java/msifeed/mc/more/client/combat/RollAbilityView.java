@@ -54,7 +54,8 @@ public class RollAbilityView extends Widget {
             final Widget widget = new Widget();
             widget.setLayout(ListLayout.VERTICAL);
 
-            final ButtonLabel btn = new ButtonLabel(ability.trShort());
+            final ButtonLabel btn = new ButtonLabel(ability.trShort()
+                    + String.format(" (%d)", character.abilities.get(ability) + modifiers.toAbility(ability)));
             btn.setClickCallback(() -> CharRpc.rollAbility(entity.getEntityId(), ability));
             btn.setSizePolicy(SizePolicy.Policy.MINIMUM, SizePolicy.Policy.MINIMUM);
             btn.setSizeHint(20, 0);
