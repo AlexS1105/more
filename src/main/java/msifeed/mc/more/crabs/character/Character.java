@@ -100,8 +100,6 @@ public class Character {
 
         c.setFloat(Tags.healthMod, healthMod);
 
-        c.setBoolean(Tags.loadedFromCrust, loadedFromCrust);
-
         return c;
     }
 
@@ -129,7 +127,6 @@ public class Character {
             visibleOnMap = true;
 
         healthMod = c.getFloat(Tags.healthMod);
-        loadedFromCrust = c.getBoolean(Tags.loadedFromCrust);
     }
 
     private static class Tags {
@@ -145,6 +142,5 @@ public class Character {
         static final String sin = "sin";
         static final String visibleOnMap = "visibleOnMap";
         static final String healthMod = "healthMod";
-        static final String loadedFromCrust = "loadedFromCrust";
     }
 }

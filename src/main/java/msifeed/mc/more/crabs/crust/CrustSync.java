@@ -102,8 +102,10 @@ public class CrustSync {
 
         CharacterAttribute.INSTANCE.update(player, character -> {
             System.out.println("CRUST CharacterAttribute.INSTANCE.update");
-            character.loadedFromCrust = true; // always toggle after  load
+
             if (sheet == null) return;
+
+            character.loadedFromCrust = true; // always toggle after  load
 
             for (Ability a : Ability.values()) {
                 final String crustKey = CrustCharsheet.ability2crust(a);
