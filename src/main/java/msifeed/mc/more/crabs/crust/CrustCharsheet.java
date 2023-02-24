@@ -1,12 +1,16 @@
 package msifeed.mc.more.crabs.crust;
 
 import msifeed.mc.more.crabs.character.Ability;
+import msifeed.mc.more.crabs.character.Skill;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CrustCharsheet {
     public Map<String, Integer> stats = new HashMap<>();
+    public List<Skill> skills = new ArrayList<>();
 
     public int estitence;
 

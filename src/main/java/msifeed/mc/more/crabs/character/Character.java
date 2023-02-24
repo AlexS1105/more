@@ -4,11 +4,9 @@ import msifeed.mc.commons.defines.Defines;
 import msifeed.mc.commons.traits.Trait;
 import msifeed.mc.more.More;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
-import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Character {
     public String name = "";
@@ -29,6 +27,8 @@ public class Character {
     public transient boolean loadedFromCrust = false;
 
     public float healthMod = 0;
+
+    public List<Skill> skills = new ArrayList<>();
 
     public Character() {
         System.out.println("CRUST init");
@@ -100,7 +100,19 @@ public class Character {
 
         c.setFloat(Tags.healthMod, healthMod);
 
+        final NBTTagList skills = new NBTTagList();
+
+        for (Skill skill : this.skills) {
+            skills.appendTag(skill.toNbt());
+        }
+
+        c.setTag(Tags.skills, skills);
+
         return c;
+    }
+
+    public int soulCoefficient() {
+        return (int) Math.ceil(estitence / 2.0f);
     }
 
     public void fromNBT(NBTTagCompound c) {
@@ -127,6 +139,12 @@ public class Character {
             visibleOnMap = true;
 
         healthMod = c.getFloat(Tags.healthMod);
+
+        final NBTTagList skillsList = c.getTagList(Tags.skills, 10);
+
+        for (int i = 0; i < skillsList.tagCount(); i++) {
+            skills.add(new Skill(skillsList.getCompoundTagAt(i)));
+        }
     }
 
     private static class Tags {
@@ -142,5 +160,6 @@ public class Character {
         static final String sin = "sin";
         static final String visibleOnMap = "visibleOnMap";
         static final String healthMod = "healthMod";
+        static final String skills = "skills";
     }
 }

@@ -10,6 +10,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import msifeed.mc.more.crabs.character.Ability;
+import msifeed.mc.more.crabs.character.Skill;
 import msifeed.mc.more.crabs.utils.CharacterAttribute;
 import msifeed.mc.sys.config.ConfigBuilder;
 import msifeed.mc.sys.config.ConfigEvent;
@@ -59,6 +60,7 @@ public class CrustSync {
                     .applyToConnectionPoolSettings(builder -> builder.maxWaitTime(5, TimeUnit.SECONDS))
                     .codecRegistry(CodecRegistries.fromProviders(
                             PojoCodecProvider.builder()
+                                    .register(Skill.class)
                                     .register(CrustCharsheet.class)
                                     .build(),
                             new ValueCodecProvider()
@@ -113,6 +115,7 @@ public class CrustSync {
             }
 
             character.estitence = sheet.estitence;
+            character.skills = sheet.skills;
         });
     }
 }
