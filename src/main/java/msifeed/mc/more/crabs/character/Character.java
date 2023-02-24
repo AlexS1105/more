@@ -75,6 +75,10 @@ public class Character {
         return sin > 0 ? 1 : sin;
     }
 
+    public int soulCoefficient() {
+        return Math.round(estitence / 10.0f);
+    }
+
     public NBTTagCompound toNBT() {
         final NBTTagCompound c = new NBTTagCompound();
 
@@ -111,10 +115,6 @@ public class Character {
         c.setTag(Tags.skills, skills);
 
         return c;
-    }
-
-    public int soulCoefficient() {
-        return (int) Math.ceil(estitence / 10.0f);
     }
 
     public void fromNBT(NBTTagCompound c) {
