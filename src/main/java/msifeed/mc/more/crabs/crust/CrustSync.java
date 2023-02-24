@@ -23,7 +23,9 @@ import org.bson.codecs.ValueCodecProvider;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class CrustSync {
     private static final Logger LOG = LogManager.getLogger("More.CrustSync");
@@ -115,7 +117,7 @@ public class CrustSync {
             }
 
             character.estitence = sheet.estitence;
-            character.skills = sheet.skills;
+            character.skills = sheet.skills.stream().filter(Objects::nonNull).collect(Collectors.toList());
         });
     }
 }

@@ -35,6 +35,10 @@ public class ButtonLabel extends Button {
         this.label.setText(text);
     }
 
+    public void setColor(int color) {
+        this.label.setColor(color);
+    }
+
     @Override
     protected void renderSelf() {
         if (isDisabled())

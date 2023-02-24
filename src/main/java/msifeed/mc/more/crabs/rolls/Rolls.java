@@ -2,6 +2,7 @@ package msifeed.mc.more.crabs.rolls;
 
 import msifeed.mc.more.crabs.character.Ability;
 import msifeed.mc.more.crabs.character.Character;
+import msifeed.mc.more.crabs.character.Skill;
 import msifeed.mc.more.crabs.combat.CombatNotifications;
 
 public final class Rolls {
@@ -17,6 +18,19 @@ public final class Rolls {
         return r;
     }
 
+    public static Result rollSkill(Character c, Modifiers m, Skill s) {
+        final Result r = new Result();
+
+        r.dice = Dices.n3d7m3();
+        r.ability = c.abilities.get(s.stat);
+        r.flatMod = m.roll;
+        r.statMod = m.toAbility(s.stat);
+        r.skillMod = s.getMod(c);
+        r.result = r.dice + r.ability + r.statMod + r.flatMod + r.skillMod;
+
+        return r;
+    }
+
     public static class Result {
         public Criticalness crit = Dices.critical();
         public int dice;
@@ -24,6 +38,7 @@ public final class Rolls {
         public int flatMod;
         public int statMod;
         public int result;
+        public int skillMod;
 
         public boolean beats(int threshold) {
             switch (crit) {

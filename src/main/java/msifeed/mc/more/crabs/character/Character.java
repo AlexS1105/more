@@ -103,6 +103,8 @@ public class Character {
         final NBTTagList skills = new NBTTagList();
 
         for (Skill skill : this.skills) {
+            if (skill == null) continue;
+
             skills.appendTag(skill.toNbt());
         }
 
@@ -112,7 +114,7 @@ public class Character {
     }
 
     public int soulCoefficient() {
-        return (int) Math.ceil(estitence / 2.0f);
+        return (int) Math.ceil(estitence / 10.0f);
     }
 
     public void fromNBT(NBTTagCompound c) {

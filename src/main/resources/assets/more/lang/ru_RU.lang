@@ -93,6 +93,7 @@ more.gui.combat.title=Боевка: %s
 more.gui.combat.progress=Прогресс
 more.gui.combat.mods=Моды
 more.gui.combat.rolls=Роллы
+more.gui.combat.skills=Навыки...
 
 more.gui.combat.join=Войти в бой
 more.gui.combat.training=Войти в бой-тренировку

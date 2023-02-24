@@ -26,6 +26,9 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IChatComponent;
 
+import java.util.Objects;
+import java.util.Optional;
+
 public enum CharRpc {
     INSTANCE;
 
@@ -33,6 +36,7 @@ public enum CharRpc {
     private static final String refreshName = Bootstrap.MODID + ":char.refreshName";
     private static final String clearEntity = Bootstrap.MODID + ":char.clear";
     private static final String rollAbility = Bootstrap.MODID + ":char.roll";
+    private static final String rollSkill = Bootstrap.MODID + ":char.roll.skill";
 
     public static void updateChar(int entityId, Character character) {
         More.RPC.sendToServer(updateChar, entityId, character.toNBT());
@@ -127,6 +131,36 @@ public enum CharRpc {
             final IChatComponent cc = MiscFormatter.formatAbilityRoll(name, a, m, roll);
             SpeechatRpc.sendRaw(target, range, cc);
             ExternalLogs.log(sender, "roll", cc.getUnformattedText());
+        } catch (MissingRequiredAttributeException e) {
+            throw new RpcException(sender, "target has no character property");
+        }
+    }
+
+    public static void rollSkill(int entityId, Skill skill) {
+        More.RPC.sendToServer(rollSkill, entityId, skill.name);
+    }
+
+    @RpcMethodHandler(rollSkill)
+    public void onRollSkill(RpcContext ctx, int entityId, String skillName) {
+        final EntityPlayer sender = ctx.getServerHandler().playerEntity;
+        final EntityLivingBase target = GetUtils.entityLiving(sender, entityId)
+                .orElseThrow(() -> new RpcException(sender, "invalid target entity"));
+
+        try {
+            final Character c = CharacterAttribute.require(target);
+            final Modifiers m = MetaAttribute.require(target).modifiers;
+            final Optional<Skill> s = c.skills.stream()
+                    .filter(skill -> Objects.equals(skill.name, skillName))
+                    .findFirst();
+
+            if (s.isPresent()) {
+                final Rolls.Result roll = Rolls.rollSkill(c, m, s.get());
+                final String name = ChatUtils.getPrettyName(target);
+                final int range = More.DEFINES.get().chat.rollRadius;
+                final IChatComponent cc = MiscFormatter.formatSkillRoll(name, s.get(), m, roll);
+                SpeechatRpc.sendRaw(target, range, cc);
+                ExternalLogs.log(sender, "roll", cc.getUnformattedText());
+            }
         } catch (MissingRequiredAttributeException e) {
             throw new RpcException(sender, "target has no character property");
         }

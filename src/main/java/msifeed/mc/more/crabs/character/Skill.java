@@ -1,5 +1,6 @@
 package msifeed.mc.more.crabs.character;
 
+import msifeed.mc.more.crabs.rolls.Modifiers;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class Skill {
@@ -16,12 +17,15 @@ public class Skill {
         this.name = nbt.getString("name");
         this.level = nbt.getInteger("level");
         this.stat = Ability.values()[nbt.getInteger("stat")];
-        this.proficiency = nbt.getBoolean("name");
+        this.proficiency = nbt.getBoolean("proficiency");
     }
 
-    public int getBonus(Character character)
-    {
-        int bonus = character.abilities.get(this.stat);
+    public int getBonus(Character character, Modifiers modifiers) {
+        return character.abilities.get(this.stat) + modifiers.toAbility(this.stat) + getMod(character);
+    }
+
+    public int getMod(Character character) {
+        int bonus = 0;
 
         if (level >= 2) {
             bonus += character.soulCoefficient();

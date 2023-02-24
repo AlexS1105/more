@@ -2,6 +2,7 @@ package msifeed.mc.extensions.chat.formatter;
 
 import msifeed.mc.extensions.chat.GmSpeech;
 import msifeed.mc.more.crabs.character.Ability;
+import msifeed.mc.more.crabs.character.Skill;
 import msifeed.mc.more.crabs.rolls.Modifiers;
 import msifeed.mc.more.crabs.rolls.Rolls;
 import net.minecraft.util.ChatComponentText;
@@ -37,6 +38,12 @@ public final class MiscFormatter {
     public static IChatComponent formatAbilityRoll(String name, Ability a, Modifiers m, Rolls.Result roll) {
         final String fmtRoll = roll.format(m.roll, m.toAbility(a), a);
         final String text = String.format("%s: %s %s", name, a.trShort(), fmtRoll);
+        return formatType("ROLL", EnumChatFormatting.GOLD, text);
+    }
+
+    public static IChatComponent formatSkillRoll(String name, Skill s, Modifiers m, Rolls.Result roll) {
+        final String fmtRoll = roll.format(m.roll, m.toAbility(s.stat), s.stat);
+        final String text = String.format("%s: %s %s", name, s.name, fmtRoll);
         return formatType("ROLL", EnumChatFormatting.GOLD, text);
     }
 
