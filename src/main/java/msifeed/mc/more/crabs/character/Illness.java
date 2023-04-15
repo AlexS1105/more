@@ -52,12 +52,6 @@ public class Illness {
     }
 
     public int debuff() {
-        final int l = level();
-        if (l > 3)
-            return 0;
-        else if (l == 3)
-            return -2;
-        else
-            return -10;
+        return 0;
     }
 }

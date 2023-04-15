@@ -1,6 +1,5 @@
 package msifeed.mc.more.crabs.character;
 
-import msifeed.mc.commons.defines.Defines;
 import msifeed.mc.commons.traits.Trait;
 import msifeed.mc.more.More;
 import net.minecraft.nbt.NBTTagCompound;
@@ -72,7 +71,7 @@ public class Character {
     }
 
     public int sinLevel() {
-        return sin > 0 ? 1 : sin;
+        return sin;
     }
 
     public int soulCoefficient() {

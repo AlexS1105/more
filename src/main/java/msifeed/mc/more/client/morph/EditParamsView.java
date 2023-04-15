@@ -50,11 +50,11 @@ class EditParamsView extends Widget {
         estitenceInput.setCallback(s -> character.estitence = estitenceInput.getInt());
         addChild(estitenceInput);
 
-        addChild(new Label("Sin"));
+        addChild(new Label("Greyness"));
         final TextInput sinInput = new TextInput();
         sinInput.getSizeHint().x = 30;
         sinInput.setText(String.valueOf(character.sin));
-        sinInput.setFilter(s -> TextInput.isUnsignedIntBetween(s, -1, 100));
+        sinInput.setFilter(s -> TextInput.isUnsignedIntBetween(s, 0, 6));
         sinInput.setCallback(s -> character.sin = sinInput.getInt());
         addChild(sinInput);
 

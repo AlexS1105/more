@@ -12,19 +12,17 @@ import msifeed.mc.sys.utils.L10n;
 
 class IllnessView extends Widget {
     private final Character character;
-    private final boolean editable;
     private final boolean gmEditor;
 
-    IllnessView(Character character, boolean editable, boolean gmEditor) {
+    IllnessView(Character character, boolean gmEditor) {
         this.character = character;
-        this.editable = editable;
         this.gmEditor = gmEditor;
         refill();
     }
 
     public void refill() {
         clearChildren();
-        if (editable)
+        if (gmEditor)
             fillEditable();
         else
             fillNonEditable();
@@ -111,7 +109,7 @@ class IllnessView extends Widget {
 
         addChild(new Label(L10n.tr("more.gui.status.illness")));
         addChild(new Label(String.valueOf(character.illness.illness)));
-        addChild(new Label(L10n.tr("more.gui.status.treatment")));
+        addChild(new Label(L10n.tr("more.gui.status.illness.treatment")));
         addChild(new Label(String.valueOf(character.illness.treatment)));
     }
 }
