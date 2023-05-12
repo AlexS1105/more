@@ -38,15 +38,17 @@ class ParamsView extends Widget {
         grid.setLayout(new GridLayout(2));
         addChild(grid);
 
-        grid.addChild(new Label(L10n.tr("more.gui.status.status.estitence")));
-        grid.addChild(new Label(Integer.toString(character.estitence)));
+        if (editable) {
+            grid.addChild(new Label(L10n.tr("more.gui.status.status.estitence")));
+            grid.addChild(new Label(Integer.toString(character.estitence)));
 
-        final int sin = character.sin;
-        final String sinLevel = L10n.tr("more.status.sin." +
-                (sin < 0 ? "-1" : sin > 0 ? "1" : "0"));
+            final int sin = character.sin;
+            final String sinLevel = L10n.tr("more.status.sin." +
+                    (sin < 0 ? "-1" : sin > 0 ? "1" : "0"));
 
-        grid.addChild(new Label(L10n.tr("more.gui.status.status.sin")));
-        grid.addChild(new Label(sinLevel + (sin > 0 ? " (" + sin + ")" : "")));
+            grid.addChild(new Label(L10n.tr("more.gui.status.status.sin")));
+            grid.addChild(new Label(sinLevel + (sin > 0 ? " (" + sin + ")" : "")));
+        }
 
         if (entity != Minecraft.getMinecraft().thePlayer)
             fillEnemy();
