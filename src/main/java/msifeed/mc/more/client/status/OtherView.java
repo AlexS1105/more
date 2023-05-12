@@ -7,14 +7,18 @@ import msifeed.mc.mellow.widgets.text.Label;
 import msifeed.mc.mellow.widgets.text.TextInput;
 import msifeed.mc.more.crabs.character.Character;
 import msifeed.mc.sys.utils.L10n;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 
 class OtherView extends Widget {
     private final Character character;
     private final boolean editable;
+    private EntityLivingBase entity;
 
-    OtherView(Character character, boolean editable) {
+    OtherView(Character character, EntityLivingBase entity, boolean editable) {
         this.character = character;
         this.editable = editable;
+        this.entity = entity;
 
         setLayout(new GridLayout());
         getMargin().set(2, 0);
@@ -60,9 +64,9 @@ class OtherView extends Widget {
     private void fillNonEditable() {
         clearChildren();
 
-        if (!character.wikiPage.isEmpty()) {
+        if (entity instanceof EntityPlayer) {
             addChild(new Label(L10n.tr("more.gui.status.other.wiki")));
-            addChild(new WikiUrlLabel(character.wikiPage));
+            addChild(new CharacterPageUrlLabel(entity.getCommandSenderName()));
         }
     }
 }

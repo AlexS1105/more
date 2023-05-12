@@ -32,5 +32,6 @@ public class Defines {
         public SpeechatDefines chat = new SpeechatDefines();
         public LocksDefines locks = new LocksDefines();
         public ItemDefines items = new ItemDefines();
+        public String characterPageUrl = "https://crust.ariadna.su/characters/";
     }
 }

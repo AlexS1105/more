@@ -4,16 +4,17 @@ import msifeed.mc.mellow.handlers.MouseHandler;
 import msifeed.mc.mellow.render.RenderShapes;
 import msifeed.mc.mellow.utils.Geom;
 import msifeed.mc.mellow.widgets.text.Label;
+import msifeed.mc.more.More;
 
 import java.awt.*;
 import java.net.URI;
 import java.net.URLEncoder;
 
-public class WikiUrlLabel extends Label implements MouseHandler.Click {
-    public WikiUrlLabel() {
+public class CharacterPageUrlLabel extends Label implements MouseHandler.Click {
+    public CharacterPageUrlLabel() {
     }
 
-    public WikiUrlLabel(String text) {
+    public CharacterPageUrlLabel(String text) {
         super(text);
     }
 
@@ -41,7 +42,7 @@ public class WikiUrlLabel extends Label implements MouseHandler.Click {
     public void onClick(int xMouse, int yMouse, int button) {
         if (Desktop.isDesktopSupported()) {
             try {
-                final String url = "https://wiki.morgana.su/index.php?search=" + URLEncoder.encode(getText(), "UTF-8");
+                final String url = More.DEFINES.get().characterPageUrl + URLEncoder.encode(getText(), "UTF-8");
                 Desktop.getDesktop().browse(new URI(url));
             } catch (Exception e) {
             }
