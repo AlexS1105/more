@@ -62,7 +62,7 @@ public class StatusScreen extends MellowGuiScreen {
         final ParamsView paramsView = new ParamsView(entity, character, editable);
         final IllnessView illnessView = new IllnessView(character, isGm);
         final EditAbilitiesView abilitiesView = new EditAbilitiesView(character, false);
-        final OtherView otherView = new OtherView(character, editable);
+        final OtherView otherView = new OtherView(character, entity, editable);
 
         tabs.addTab(L10n.tr("more.gui.status.status"), paramsView);
         if (editable || character.illness.limit > 0)

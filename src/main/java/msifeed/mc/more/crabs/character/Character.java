@@ -30,7 +30,6 @@ public class Character {
     public List<Skill> skills = new ArrayList<>();
 
     public Character() {
-        System.out.println("CRUST init");
         for (Ability f : Ability.values())
             abilities.put(f, 7);
     }

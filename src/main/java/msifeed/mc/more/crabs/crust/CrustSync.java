@@ -79,7 +79,6 @@ public class CrustSync {
 
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        System.out.println("CRUST onPlayerLogin");
         sync(event.player);
     }
 
@@ -105,8 +104,6 @@ public class CrustSync {
         else LOG.warn("Player entry is not found: " + username);
 
         CharacterAttribute.INSTANCE.update(player, character -> {
-            System.out.println("CRUST CharacterAttribute.INSTANCE.update");
-
             if (sheet == null) return;
 
             character.loadedFromCrust = true; // always toggle after  load
