@@ -8,12 +8,13 @@ import msifeed.mc.mellow.widgets.Widget;
 import msifeed.mc.mellow.widgets.button.Button;
 import msifeed.mc.mellow.widgets.button.ButtonLabel;
 import msifeed.mc.mellow.widgets.droplist.DropList;
+import msifeed.mc.mellow.widgets.scroll.ScrollArea;
 import msifeed.mc.mellow.widgets.text.Label;
 import msifeed.mc.extensions.tags.TagsRpc;
 import msifeed.mc.sys.utils.L10n;
 import net.minecraft.item.ItemStack;
-import scala.actors.threadpool.Arrays;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScreenTagEditor extends Widget {
@@ -26,9 +27,21 @@ public class ScreenTagEditor extends Widget {
 
         setLayout(ListLayout.VERTICAL);
 
-        final DropList<String> tag = new DropList<>(Arrays.asList(Tags.INSTANCE.tags.get().keySet().toArray()));
-        tag.setSelectCallback(this::addTag);
-        addChild(tag);
+        final ScrollArea scrollArea = new ScrollArea();
+        scrollArea.setSizePolicy(SizePolicy.Policy.MAXIMUM, SizePolicy.Policy.FIXED);
+        scrollArea.setSizeHint(100, 100);
+
+        for (String tag : Tags.INSTANCE.tags.get().keySet()) {
+            final ButtonLabel button = new ButtonLabel(tag);
+            button.setClickCallback(() -> addTag(tag));
+            scrollArea.addChild(button);
+        }
+
+        addChild(scrollArea);
+
+        //final DropList<String> tag = new DropList<>(new ArrayList<>(Tags.INSTANCE.tags.get().keySet()));
+        //tag.setSelectCallback(this::addTag);
+        //addChild(tag);
 
         addChild(new Label("Current Tags:"));
 
