@@ -77,6 +77,10 @@ public class MorphScreen extends MellowGuiScreen {
         final Button submitBtn = new ButtonLabel("Submit");
         submitBtn.setClickCallback(() -> {
             if (character != null && metaInfo != null) {
+                if (!(entity instanceof EntityPlayer)) {
+                    character.isNpc = true;
+                }
+
                 CharRpc.updateChar(entity.getEntityId(), character);
                 MetaRpc.updateMeta(entity.getEntityId(), metaInfo);
             } else {

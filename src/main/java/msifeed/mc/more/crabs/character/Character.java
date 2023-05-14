@@ -29,6 +29,8 @@ public class Character {
 
     public List<Skill> skills = new ArrayList<>();
 
+    public boolean isNpc = false;
+
     public Character() {
         for (Ability f : Ability.values())
             abilities.put(f, 7);
@@ -49,6 +51,7 @@ public class Character {
         visibleOnMap = c.visibleOnMap;
         loadedFromCrust = c.loadedFromCrust;
         healthMod = c.healthMod;
+        isNpc = c.isNpc;
     }
 
     public Set<Trait> traits() {
@@ -111,6 +114,7 @@ public class Character {
         }
 
         c.setTag(Tags.skills, skills);
+        c.setBoolean(Tags.isNpc, isNpc);
 
         return c;
     }
@@ -145,6 +149,8 @@ public class Character {
         for (int i = 0; i < skillsList.tagCount(); i++) {
             skills.add(new Skill(skillsList.getCompoundTagAt(i)));
         }
+
+        isNpc = c.getBoolean(Tags.isNpc);
     }
 
     private static class Tags {
@@ -161,5 +167,6 @@ public class Character {
         static final String visibleOnMap = "visibleOnMap";
         static final String healthMod = "healthMod";
         static final String skills = "skills";
+        static final String isNpc = "isNpc";
     }
 }

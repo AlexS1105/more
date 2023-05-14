@@ -63,6 +63,7 @@ public enum CharRpc {
         }
 
         final Character after = CharacterAttribute.get(target).orElse(null);
+
         if (after != null) {
             final Character before = new Character(after);
             CharacterAttribute.INSTANCE.update(target, c -> c.fromNBT(charNbt));

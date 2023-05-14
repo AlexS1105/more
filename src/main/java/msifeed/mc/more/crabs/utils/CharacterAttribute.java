@@ -2,6 +2,7 @@ package msifeed.mc.more.crabs.utils;
 
 import msifeed.mc.Bootstrap;
 import msifeed.mc.commons.traits.Trait;
+import msifeed.mc.extensions.tags.Tags;
 import msifeed.mc.more.crabs.character.Character;
 import msifeed.mc.sys.attributes.EntityLivingAttribute;
 import msifeed.mc.sys.attributes.MissingRequiredAttributeException;
@@ -54,10 +55,12 @@ public class CharacterAttribute extends EntityLivingAttribute<Character> {
     @Override
     public Character loadNBTData(Character value, NBTTagCompound root) {
         if (!root.hasKey(PROP_NAME)) return null;
-        if (value == null || value.loadedFromCrust) return null;
 
         final Character character = new Character();
         character.fromNBT(root.getCompoundTag(PROP_NAME));
+
+        if ((value == null || value.loadedFromCrust) && !character.isNpc) return null;
+
         return character;
     }
 
