@@ -133,15 +133,18 @@ public enum CharRpc {
             final IChatComponent cc = MiscFormatter.formatAbilityRoll(name, a, m, roll);
             SpeechatRpc.sendRaw(target, range, cc);
             ExternalLogs.log(sender, "roll", cc.getUnformattedText());
-            if (roll.crit == Criticalness.LUCK) {
-                target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, Bootstrap.MODID + ":roll.success", 1.0F, 0.7F);
-            }
-            if (roll.crit == Criticalness.FAIL) {
-                    target.worldObj.playSoundEffect (target.posX, target.posY, target.posZ, Bootstrap.MODID + ":roll.failure", 1.0F, 0.7F);
+
+            if (roll.crit != Criticalness.NONE) {
+                playCritSound(target, roll);
             }
         } catch (MissingRequiredAttributeException e) {
             throw new RpcException(sender, "target has no character property");
         }
+    }
+
+    private static void playCritSound(EntityLivingBase target, Rolls.Result roll) {
+        final String sound = roll.crit == Criticalness.LUCK ? "success" : "failure";
+        target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, Bootstrap.MODID + ":roll." + sound, 1.0F, 0.7F);
     }
 
     public static void rollSkill(int entityId, Skill skill) {
@@ -168,6 +171,10 @@ public enum CharRpc {
                 final IChatComponent cc = MiscFormatter.formatSkillRoll(name, s.get(), m, roll);
                 SpeechatRpc.sendRaw(target, range, cc);
                 ExternalLogs.log(sender, "roll", cc.getUnformattedText());
+
+                if (roll.crit != Criticalness.NONE) {
+                    playCritSound(target, roll);
+                }
             }
         } catch (MissingRequiredAttributeException e) {
             throw new RpcException(sender, "target has no character property");
