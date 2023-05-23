@@ -8,6 +8,7 @@ import msifeed.mc.extensions.chat.SpeechatRpc;
 import msifeed.mc.extensions.chat.formatter.MiscFormatter;
 import msifeed.mc.extensions.tweaks.HealthModifier;
 import msifeed.mc.more.More;
+import msifeed.mc.more.crabs.rolls.Criticalness;
 import msifeed.mc.more.crabs.rolls.Modifiers;
 import msifeed.mc.more.crabs.rolls.Rolls;
 import msifeed.mc.more.crabs.utils.CharacterAttribute;
@@ -132,6 +133,12 @@ public enum CharRpc {
             final IChatComponent cc = MiscFormatter.formatAbilityRoll(name, a, m, roll);
             SpeechatRpc.sendRaw(target, range, cc);
             ExternalLogs.log(sender, "roll", cc.getUnformattedText());
+            if (roll.crit == Criticalness.LUCK) {
+                target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, Bootstrap.MODID + ":roll.success", 1.0F, 0.7F);
+            }
+            if (roll.crit == Criticalness.FAIL) {
+                    target.worldObj.playSoundEffect (target.posX, target.posY, target.posZ, Bootstrap.MODID + ":roll.failure", 1.0F, 0.7F);
+            }
         } catch (MissingRequiredAttributeException e) {
             throw new RpcException(sender, "target has no character property");
         }

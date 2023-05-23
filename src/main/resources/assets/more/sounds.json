@@ -4,5 +4,17 @@
     "sounds": [
       "speechat/message"
     ]
+  },
+  "roll.failure": {
+    "category": "player",
+    "sounds": [
+      "speechat/failure"
+    ]
+  },
+  "roll.success": {
+    "category": "player",
+    "sounds": [
+      "speechat/success"
+    ]
   }
 }
