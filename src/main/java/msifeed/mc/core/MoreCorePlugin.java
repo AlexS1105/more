@@ -12,7 +12,8 @@ public class MoreCorePlugin implements IFMLLoadingPlugin {
     @Override
     public String[] getASMTransformerClass() {
         return new String[] {
-                JourneymapTransformer.class.getName()
+                JourneymapTransformer.class.getName(),
+                GlobalRenderTransformer.class.getName()
         };
     }
 
