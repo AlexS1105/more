@@ -144,7 +144,7 @@ public enum CharRpc {
 
     private static void playCritSound(EntityLivingBase target, Rolls.Result roll) {
         final String sound = roll.crit == Criticalness.LUCK ? "success" : "failure";
-        target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, Bootstrap.MODID + ":roll." + sound, 1.0F, 0.7F);
+        target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, Bootstrap.MODID + ":roll." + sound, 1.0F, 1.0F);
     }
 
     public static void rollSkill(int entityId, Skill skill) {
