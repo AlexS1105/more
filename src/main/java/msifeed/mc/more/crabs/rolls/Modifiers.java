@@ -41,7 +41,7 @@ public class Modifiers {
 
             boolean shouldDisableSkills = SKILL_DISABLER_TRAUMAS.contains(trauma) && traumaLevel > 0;
             if (shouldDisableSkills) {
-                disableSkillsForTrauma(trauma, character);
+                disableSkills(trauma == Trauma.DEBUFF_BURN, character);
 
                 if (traumaLevel > 1) {
                     metaRoll -= traumaLevel - 1;
@@ -58,12 +58,6 @@ public class Modifiers {
         } catch (IllegalArgumentException e) {
             // ignore
         }
-    }
-
-    private void disableSkillsForTrauma(Trauma trauma, Character character) {
-        String debuff = trauma.name().replace("DEBUFF_", "");
-
-        disableSkills("BURN".equals(debuff), character);
     }
 
     private static boolean shouldDisableSkill(Skill skill, boolean disableVesselAbilities) {
