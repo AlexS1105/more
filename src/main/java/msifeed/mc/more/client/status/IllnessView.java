@@ -8,13 +8,20 @@ import msifeed.mc.mellow.widgets.button.Checkbox;
 import msifeed.mc.mellow.widgets.text.Label;
 import msifeed.mc.mellow.widgets.text.TextInput;
 import msifeed.mc.more.crabs.character.Character;
+import msifeed.mc.more.crabs.character.Trauma;
+import msifeed.mc.more.crabs.meta.MetaInfo;
+import msifeed.mc.more.crabs.meta.MetaRpc;
+import msifeed.mc.more.crabs.utils.MetaAttribute;
 import msifeed.mc.sys.utils.L10n;
+import net.minecraft.entity.EntityLivingBase;
 
 class IllnessView extends Widget {
+    private final EntityLivingBase entity;
     private final Character character;
     private final boolean gmEditor;
 
-    IllnessView(Character character, boolean gmEditor) {
+    IllnessView(EntityLivingBase entity, Character character, boolean gmEditor) {
+        this.entity = entity;
         this.character = character;
         this.gmEditor = gmEditor;
         refill();
@@ -84,6 +91,19 @@ class IllnessView extends Widget {
         treatmentInput.setCallback(s -> character.illness.treatment = (short) treatmentInput.getInt());
         treatmentInput.setText(String.valueOf(character.illness.treatment));
         params.addChild(treatmentInput);
+
+        if (gmEditor) {
+            MetaAttribute.get(entity).ifPresent(meta -> {
+                addChild(new Separator());
+                final Widget traumas = new Widget();
+                traumas.setLayout(new GridLayout(3));
+                addChild(traumas);
+
+                for (Trauma t : Trauma.values()) {
+                    addTraumaParam(traumas, character, t, true, meta);
+                }
+            });
+        }
     }
 
     private void fillNonEditable() {
@@ -111,5 +131,41 @@ class IllnessView extends Widget {
         addChild(new Label(String.valueOf(character.illness.illness)));
         addChild(new Label(L10n.tr("more.gui.status.illness.treatment")));
         addChild(new Label(String.valueOf(character.illness.treatment)));
+
+
+        for (Trauma t : Trauma.values()) {
+            addTraumaParam(this, character, t, gmEditor, null);
+        }
+    }
+
+    private void addTraumaParam(Widget traumas, Character character, Trauma trauma, boolean editable, MetaInfo meta) {
+        final Widget pair = new Widget();
+        pair.setLayout(ListLayout.HORIZONTAL);
+        traumas.addChild(pair);
+
+        final Label label = new Label(trauma.trShort());
+        label.getSizeHint().x = 40;
+        label.getPos().y = 1;
+        pair.addChild(label);
+
+        final int traumaValue = character.traumas.getOrDefault(trauma, 0);
+
+        if (editable) {
+            final TextInput input = new TextInput();
+            input.getSizeHint().x = 16;
+
+            input.setText(Integer.toString(traumaValue));
+            input.setFilter(s -> TextInput.isSignedIntBetween(s, 0, 99));
+            input.setCallback(s -> {
+                character.traumas.put(trauma, s.isEmpty() ? 1 : Integer.parseInt(s));
+                meta.modifiers.updateForTraumas(character);
+                MetaRpc.updateMeta(entity.getEntityId(), meta);
+            });
+            pair.addChild(input);
+        } else {
+            final Label valueLabel = new Label(Integer.toString(traumaValue));
+            valueLabel.getSizeHint().x = 16;
+            pair.addChild(valueLabel);
+        }
     }
 }

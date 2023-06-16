@@ -142,6 +142,17 @@ more.ability.short.wil=ВОЛЯ
 more.ability.spr=Дух
 more.ability.short.spr=ДУХ
 
+more.trauma.short.debuff_str=Увечье
+more.trauma.short.debuff_end=Разрыв
+more.trauma.short.debuff_per=Сотрясение
+more.trauma.short.debuff_ref=Перелом
+more.trauma.short.debuff_det=Контузия
+more.trauma.short.debuff_int=Деменция
+more.trauma.short.debuff_wil=Истерия
+more.trauma.short.debuff_spr=Делирий
+more.trauma.short.debuff_burn=Ожог
+more.trauma.short.debuff_amnesia=Амнезия
+
 more.status.sin.0=Душа
 more.status.sin.1=Воплощение
 more.status.sin.2=Эрос

@@ -34,7 +34,7 @@ public class AccessTunerItem extends LockpickItem {
         final Character c = CharacterAttribute.require(player);
         final Modifiers m = MetaAttribute.require(player).modifiers;
         final Rolls.Result result = Rolls.rollAbility(c, m, Ability.INT);
-        final String fmtResult = result.format(m.roll, m.toAbility(Ability.INT), Ability.INT);
+        final String fmtResult = result.format(m.roll + m.metaRoll, m.toAbility(Ability.INT), Ability.INT);
         ExternalLogs.log(player, "roll", String.format("pick digital lock (diff %d) = %s", lock.getDifficulty(), fmtResult));
 
         if (result.beats(lock.getDifficulty()))
