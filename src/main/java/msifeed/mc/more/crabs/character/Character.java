@@ -14,6 +14,7 @@ public class Character {
 
     public EnumMap<Ability, Integer> abilities = new EnumMap<>(Ability.class);
     public Illness illness = new Illness();
+    public EnumMap<Trauma, Integer> traumas = new EnumMap<>(Trauma.class);
 
     public int fistsDamage = 0;
     public int armor = 0;
@@ -34,14 +35,16 @@ public class Character {
     public Character() {
         for (Ability f : Ability.values())
             abilities.put(f, 7);
+        for (Trauma t : Trauma.values())
+            traumas.put(t, 0);
     }
 
     public Character(Character c) {
         name = c.name;
         wikiPage = c.wikiPage;
         traits.addAll(c.traits);
-        for (EnumMap.Entry<Ability, Integer> e : c.abilities.entrySet())
-            abilities.put(e.getKey(), e.getValue());
+        abilities.putAll(c.abilities);
+        traumas.putAll(c.traumas);
         illness.unpack(c.illness.pack());
         fistsDamage = c.fistsDamage;
         armor = c.armor;
@@ -92,6 +95,12 @@ public class Character {
             abilitiesArr[f.ordinal()] = abilities.getOrDefault(f, 0);
         c.setIntArray(Tags.abilities, abilitiesArr);
 
+        final int[] traumasArr = new int[Trauma.values().length];
+        for (Trauma t : Trauma.values()) {
+            traumasArr[t.ordinal()] = traumas.getOrDefault(t, 0);
+        }
+        c.setIntArray(Tags.traumas, traumasArr);
+
         c.setInteger(Tags.illness, illness.pack());
 
         c.setInteger(Tags.fistsDmg, fistsDamage);
@@ -125,8 +134,14 @@ public class Character {
         traits = Trait.decode(c.getIntArray(Tags.traits));
 
         final int[] abilitiesArr = c.getIntArray(Tags.abilities);
-        for (Ability f : Ability.values())
+        for (Ability f : Ability.values()) {
             abilities.put(f, abilitiesArr[f.ordinal()]);
+        }
+
+        final int[] traumasArr = c.getIntArray(Tags.traumas);
+        for (Trauma t : Trauma.values()) {
+            traumas.put(t, traumasArr[t.ordinal()]);
+        }
 
         illness.unpack(c.getInteger(Tags.illness));
 
@@ -157,6 +172,7 @@ public class Character {
         static final String name = "name";
         static final String wiki = "wiki";
         static final String traits = "traits";
+        static final String traumas = "traumas";
         static final String abilities = "abs";
         static final String illness = "illness";
         static final String fistsDmg = "fistsDmg";
