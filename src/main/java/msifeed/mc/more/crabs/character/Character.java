@@ -43,6 +43,7 @@ public class Character {
         name = c.name;
         wikiPage = c.wikiPage;
         traits.addAll(c.traits);
+        skills.clear();
         skills.addAll(c.skills);
         abilities.putAll(c.abilities);
         traumas.putAll(c.traumas);
@@ -162,6 +163,7 @@ public class Character {
 
         final NBTTagList skillsList = c.getTagList(Tags.skills, 10);
 
+        skills.clear();
         for (int i = 0; i < skillsList.tagCount(); i++) {
             skills.add(new Skill(skillsList.getCompoundTagAt(i)));
         }
