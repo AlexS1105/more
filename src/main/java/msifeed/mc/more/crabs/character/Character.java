@@ -162,6 +162,7 @@ public class Character {
 
         final NBTTagList skillsList = c.getTagList(Tags.skills, 10);
 
+        skills.clear();
         for (int i = 0; i < skillsList.tagCount(); i++) {
             skills.add(new Skill(skillsList.getCompoundTagAt(i)));
         }
