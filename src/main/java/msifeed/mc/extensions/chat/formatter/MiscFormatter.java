@@ -36,13 +36,13 @@ public final class MiscFormatter {
     }
 
     public static IChatComponent formatAbilityRoll(String name, Ability a, Modifiers m, Rolls.Result roll) {
-        final String fmtRoll = roll.format(m.roll, m.toAbility(a), a);
+        final String fmtRoll = roll.format(m.roll + m.metaRoll, m.toAbility(a), a);
         final String text = String.format("%s: %s %s", name, a.trShort(), fmtRoll);
         return formatType("ROLL", EnumChatFormatting.GOLD, text);
     }
 
     public static IChatComponent formatSkillRoll(String name, Skill s, Modifiers m, Rolls.Result roll) {
-        final String fmtRoll = roll.format(m.roll, m.toAbility(s.stat), s.stat);
+        final String fmtRoll = roll.format(m.roll + m.metaRoll, m.toAbility(s.stat), s.stat);
         final String text = String.format("%s: %s %s", name, s.name, fmtRoll);
         return formatType("ROLL", EnumChatFormatting.GOLD, text);
     }

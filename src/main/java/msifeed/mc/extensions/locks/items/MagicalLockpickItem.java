@@ -34,7 +34,7 @@ public class MagicalLockpickItem extends LockpickItem {
         final Character c = CharacterAttribute.require(player);
         final Modifiers m = MetaAttribute.require(player).modifiers;
         final Rolls.Result result = Rolls.rollAbility(c, m, Ability.SPR);
-        final String fmtResult = result.format(m.roll, m.toAbility(Ability.SPR), Ability.SPR);
+        final String fmtResult = result.format(m.roll + m.metaRoll, m.toAbility(Ability.SPR), Ability.SPR);
         ExternalLogs.log(player, "roll", String.format("pick magical lock (diff %d) = %s", lock.getDifficulty(), fmtResult));
 
         if (result.beats(lock.getDifficulty()))

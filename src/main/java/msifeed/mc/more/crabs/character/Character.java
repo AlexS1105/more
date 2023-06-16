@@ -43,6 +43,7 @@ public class Character {
         name = c.name;
         wikiPage = c.wikiPage;
         traits.addAll(c.traits);
+        skills.addAll(c.skills);
         abilities.putAll(c.abilities);
         traumas.putAll(c.traumas);
         illness.unpack(c.illness.pack());

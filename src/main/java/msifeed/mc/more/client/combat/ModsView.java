@@ -66,7 +66,7 @@ class ModsView extends Widget {
         final TextInput input = new TextInput();
         input.getSizeHint().x = 16;
 
-        final int modValue = meta.modifiers.toAbility(a);
+        final int modValue = meta.modifiers.customToAbility(a);
         if (modValue != 0)
             input.setText(Integer.toString(modValue));
         input.setFilter(s -> TextInput.isSignedIntBetween(s, -99, 99));

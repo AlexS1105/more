@@ -75,6 +75,12 @@ public class RollAbilityView extends Widget {
             final ButtonLabel btn = new ButtonLabel(skill.name
                     + String.format(" (%d)", skill.getBonus(character, modifiers)));
 
+            if (modifiers.isSkillDisabled(skill)) {
+                btn.setDisabled(true);
+                widget.addChild(btn);
+                continue;
+            }
+
             if (skill.proficiency) {
                 btn.setColor(Color.orange.getRGB());
             }

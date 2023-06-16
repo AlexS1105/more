@@ -72,7 +72,7 @@ public final class CombatNotifications {
                 sb.append(" (");
                 final int len = sb.length();
                 if (info.mod.roll != 0)
-                    sb.append(explicitSignInt(info.mod.roll));
+                    sb.append(explicitSignInt(info.mod.roll + info.mod.metaRoll));
                 if (info.mod.hasAbilityMods()) {
                     if (len != sb.length())
                         sb.append(' ');

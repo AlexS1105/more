@@ -40,7 +40,7 @@ public class LockpickItem extends Item {
         final Character c = CharacterAttribute.require(player);
         final Modifiers m = MetaAttribute.require(player).modifiers;
         final Rolls.Result result = Rolls.rollAbility(c, m, Ability.REF);
-        final String fmtResult = result.format(m.roll, m.toAbility(Ability.REF), Ability.REF);
+        final String fmtResult = result.format(m.roll + m.metaRoll, m.toAbility(Ability.REF), Ability.REF);
         ExternalLogs.log(player, "roll", String.format("pick mechanical lock (diff %d) = %s", lock.getDifficulty(), fmtResult));
 
         if (result.beats(lock.getDifficulty()))
