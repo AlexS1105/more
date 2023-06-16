@@ -77,8 +77,6 @@ public class RollAbilityView extends Widget {
 
             if (modifiers.isSkillDisabled(skill)) {
                 btn.setDisabled(true);
-                widget.addChild(btn);
-                continue;
             }
 
             if (skill.proficiency) {
