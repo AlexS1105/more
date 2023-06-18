@@ -157,7 +157,7 @@ class IllnessView extends Widget {
             input.setText(Integer.toString(traumaValue));
             input.setFilter(s -> TextInput.isSignedIntBetween(s, 0, 99));
             input.setCallback(s -> {
-                character.traumas.put(trauma, s.isEmpty() ? 1 : Integer.parseInt(s));
+                character.traumas.put(trauma, s.isEmpty() ? 0 : Integer.parseInt(s));
                 meta.modifiers.updateForTraumas(character);
                 MetaRpc.updateMeta(entity.getEntityId(), meta);
             });
