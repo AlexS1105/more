@@ -94,6 +94,7 @@ more.gui.combat.progress=Прогресс
 more.gui.combat.mods=Моды
 more.gui.combat.rolls=Роллы
 more.gui.combat.skills=Навыки...
+more.gui.combat.shrimps=Действия
 
 more.gui.combat.join=Войти в бой
 more.gui.combat.training=Войти в бой-тренировку
@@ -104,6 +105,28 @@ more.gui.combat.add_combat=Вкл. боевку
 more.gui.combat.rem_combat=Очистить энтитю
 more.gui.combat.end_attack=Завершить атаку
 more.gui.combat.reset=Сброс хода
+
+more.gui.combat.shrimps.main_action=Основное действие
+more.gui.combat.shrimps.secondary_action=Частичное действие
+more.gui.combat.shrimps.swift_action=Быстрое действие
+more.gui.combat.shrimps.free_action=Свободное действие
+more.gui.combat.shrimps.skip_turn=Пропустить ход
+more.gui.combat.shrimps.do_turn=Провести ход
+more.gui.combat.shrimps.reaction=Реакция
+more.gui.combat.shrimps.do_reaction=Провести реакцию
+more.gui.combat.shrimps.full_action=Полное действие
+more.gui.combat.shrimps.do_full_action=Провести полное действие
+more.gui.combat.shrimps.reset=Сбросить ход
+more.gui.combat.shrimps.do_narrative_action=Нарративное действие
+
+more.shrimps.skip_turn=§lПропуск хода
+more.shrimps.narrative_action=§lНарративное действие
+more.shrimps.reaction=§lРеакция:§r %s
+more.shrimps.full_action=§lПолное действие:§r %s
+more.shrimps.main_action=§lОсновное действие:§r %s
+more.shrimps.secondary_action=§lЧастичное действие:§r %s
+more.shrimps.swift_action=§lБыстрое действие:§r %s
+more.shrimps.free_action=§lСвободное действие:§r %s
 
 more.gui.combat.tips.training=Режим тренировки
 more.gui.combat.tips.offence_action=Выберите атакующее действие

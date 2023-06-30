@@ -40,6 +40,18 @@ public enum CombatRpc {
     private final static String addBuff = Bootstrap.MODID + ":combat.buff.add";
     private final static String removeBuff = Bootstrap.MODID + ":combat.buff.remove";
 
+    private final static String doShrimpsAction = Bootstrap.MODID + ":combat.shrimps.action";
+
+    // // // //
+    public static void doShrimpsAction(ShrimpsAction action) { More.RPC.sendToServer(doShrimpsAction, action); }
+
+    @RpcMethodHandler(doShrimpsAction)
+    public void onDoShrimpsAction(RpcContext ctx, ShrimpsAction action) {
+        final EntityPlayerMP sender = ctx.getServerHandler().playerEntity;
+
+        CombatNotifications.shrimpsAction(sender, action);
+    }
+
     // // // //
 
     public static void doAction(int entityId, String actionId) {

@@ -26,6 +26,7 @@ public class CombatScreen extends MellowGuiScreen {
     private final ModsView modsView;
     private final RollAbilityView rollAbilityView;
     private final BuffView buffView;
+    private final ShrimpsActionView shrimpsActionView;
 
     public CombatScreen(EntityLivingBase entity) {
         this.entity = entity;
@@ -34,6 +35,7 @@ public class CombatScreen extends MellowGuiScreen {
         this.modsView = new ModsView(entity);
         this.rollAbilityView = new RollAbilityView(entity);
         this.buffView = new BuffView(entity);
+        this.shrimpsActionView = new ShrimpsActionView(entity);
 
         final Window window = new Window();
         window.setTitle(L10n.fmt("more.gui.combat.title", entity.getCommandSenderName()));
@@ -48,6 +50,7 @@ public class CombatScreen extends MellowGuiScreen {
         tabs.addTab(L10n.tr("more.gui.combat.progress"), progressView);
         tabs.addTab(L10n.tr("more.gui.combat.mods"), modsView);
         tabs.addTab(L10n.tr("more.gui.combat.rolls"), rollAbilityView);
+        tabs.addTab(L10n.tr("more.gui.combat.shrimps"), shrimpsActionView);
 
         final EntityPlayer self = Minecraft.getMinecraft().thePlayer;
         if (CharacterAttribute.has(self, Trait.gm))

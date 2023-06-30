@@ -3,6 +3,8 @@ package msifeed.mc.sys.rpc;
 import com.google.common.primitives.Primitives;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
+import msifeed.mc.more.More;
+import msifeed.mc.more.crabs.combat.ShrimpsAction;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentStyle;
 import net.minecraft.util.ChatComponentText;
@@ -41,6 +43,9 @@ public class RpcCodec {
                 buf -> new UUID(buf.readLong(), buf.readLong()));
 
         addType(byte[].class, RpcCodec::writeCompressed, RpcCodec::readCompressed);
+        addType(ShrimpsAction.class,
+                (buf, comp) -> ByteBufUtils.writeUTF8String(buf, More.GSON.toJson(comp)),
+                buf -> More.GSON.fromJson(ByteBufUtils.readUTF8String(buf), ShrimpsAction.class));
 
         addType(IChatComponent.class,
                 (buf, comp) -> ByteBufUtils.writeUTF8String(buf, IChatComponent.Serializer.func_150696_a(comp)),
