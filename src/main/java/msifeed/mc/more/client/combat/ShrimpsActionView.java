@@ -13,7 +13,7 @@ import net.minecraft.entity.EntityLivingBase;
 
 public class ShrimpsActionView extends Widget {
     private final EntityLivingBase entity;
-    private final ShrimpsAction action = new ShrimpsAction();
+    private static ShrimpsAction action = new ShrimpsAction();
 
     public ShrimpsActionView(EntityLivingBase entity) {
         this.entity = entity;
@@ -25,24 +25,28 @@ public class ShrimpsActionView extends Widget {
         addChild(new Label(L10n.tr("more.gui.combat.shrimps.main_action")));
         final TextInput mainActionInput = new TextInput();
         mainActionInput.getSizeHint().x = 50;
+        mainActionInput.setText(action.mainAction);
         mainActionInput.setCallback(s -> action.mainAction = s);
         addChild(mainActionInput);
 
         addChild(new Label(L10n.tr("more.gui.combat.shrimps.secondary_action")));
         final TextInput secondaryActionInput = new TextInput();
         secondaryActionInput.getSizeHint().x = 50;
+        secondaryActionInput.setText(action.secondaryAction);
         secondaryActionInput.setCallback(s -> action.secondaryAction = s);
         addChild(secondaryActionInput);
 
         addChild(new Label(L10n.tr("more.gui.combat.shrimps.swift_action")));
         final TextInput swiftActionInput = new TextInput();
         swiftActionInput.getSizeHint().x = 50;
+        swiftActionInput.setText(action.swiftAction);
         swiftActionInput.setCallback(s -> action.swiftAction = s);
         addChild(swiftActionInput);
 
         addChild(new Label(L10n.tr("more.gui.combat.shrimps.free_action")));
         final TextInput freeActionInput = new TextInput();
         freeActionInput.getSizeHint().x = 50;
+        freeActionInput.setText(action.freeAction);
         freeActionInput.setCallback(s -> action.freeAction = s);
         addChild(freeActionInput);
 
@@ -63,12 +67,14 @@ public class ShrimpsActionView extends Widget {
         addChild(new Label(L10n.tr("more.gui.combat.shrimps.reaction")));
         final TextInput reactionInput = new TextInput();
         reactionInput.getSizeHint().x = 50;
+        reactionInput.setText(action.reaction);
         reactionInput.setCallback(s -> action.reaction = s);
         addChild(reactionInput);
 
         addChild(new Label(L10n.tr("more.gui.combat.shrimps.full_action")));
         final TextInput fullActionInput = new TextInput();
         fullActionInput.getSizeHint().x = 50;
+        fullActionInput.setText(action.fullAction);
         fullActionInput.setCallback(s -> action.fullAction = s);
         addChild(fullActionInput);
 
@@ -92,13 +98,15 @@ public class ShrimpsActionView extends Widget {
         addChild(narrativeButton);
     }
 
+    private void reset() {
+        action = new ShrimpsAction();
+        clearChildren();
+        refill();
+    }
+
     private void doNarrativeAction() {
         action.type = ShrimpsAction.Type.NARRATIVE;
         CombatRpc.doShrimpsAction(action);
-    }
-
-    private void reset() {
-
     }
 
     private void doFullAction() {
