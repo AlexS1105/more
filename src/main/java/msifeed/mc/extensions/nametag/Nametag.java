@@ -17,6 +17,8 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
+import javax.annotation.Nullable;
+
 public class Nametag {
     @SidedProxy(
             serverSide = "msifeed.mc.extensions.nametag.Nametag",
@@ -55,6 +57,11 @@ public class Nametag {
     protected String getPreferredName(EntityPlayer player) {
         final Character c = CharacterAttribute.require(player);
         return c.name.isEmpty() ? player.getCommandSenderName() : c.name;
+    }
+
+    protected @Nullable String getStatus(EntityPlayer player) {
+        final Character c = CharacterAttribute.require(player);
+        return c.status.isEmpty() ? null : c.status;
     }
 
     static int getSpeechRadius() {

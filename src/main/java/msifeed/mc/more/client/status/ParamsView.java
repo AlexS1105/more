@@ -4,8 +4,10 @@ import msifeed.mc.mellow.layout.GridLayout;
 import msifeed.mc.mellow.layout.ListLayout;
 import msifeed.mc.mellow.widgets.Widget;
 import msifeed.mc.mellow.widgets.text.Label;
+import msifeed.mc.mellow.widgets.text.TextInput;
 import msifeed.mc.more.crabs.action.effects.Buff;
 import msifeed.mc.more.crabs.action.effects.Effect;
+import msifeed.mc.more.crabs.character.CharRpc;
 import msifeed.mc.more.crabs.character.Character;
 import msifeed.mc.more.crabs.combat.PotionsHandler;
 import msifeed.mc.more.crabs.utils.CombatAttribute;
@@ -48,6 +50,20 @@ class ParamsView extends Widget {
 
             grid.addChild(new Label(L10n.tr("more.gui.status.status.sin")));
             grid.addChild(new Label(sinLevel + (sin > 0 ? " (" + sin + ")" : "")));
+        }
+
+        grid.addChild(new Label(L10n.tr("more.gui.status.status.current_status")));
+
+        if (editable) {
+            final TextInput statusInput = new TextInput();
+            statusInput.getSizeHint().x = 100;
+            statusInput.setMaxLineWidth(300);
+            statusInput.setText(character.status);
+            statusInput.setFilter((s) -> s.length() <= 32);
+            statusInput.setCallback(s -> character.status = s);
+            grid.addChild(statusInput);
+        } else {
+            grid.addChild(new Label(character.status));
         }
 
         if (entity != Minecraft.getMinecraft().thePlayer)

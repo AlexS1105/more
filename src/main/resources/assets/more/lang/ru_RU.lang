@@ -74,6 +74,7 @@ more.gui.status.title=Статус: %s
 more.gui.status.status=Статус
 more.gui.status.status.estitence=Эститенция
 more.gui.status.status.sin=Серость
+more.gui.status.status.current_status=Состояние
 more.gui.status.illness=Болезнь
 more.gui.status.illness.cured=Болезнь излечена!
 more.gui.status.illness.lost=Болезнь победила!
