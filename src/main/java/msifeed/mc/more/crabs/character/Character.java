@@ -10,6 +10,7 @@ import java.util.*;
 public class Character {
     public String name = "";
     public String wikiPage = "";
+    public String status = "";
     public Set<Trait> traits = new HashSet<>();
 
     public EnumMap<Ability, Integer> abilities = new EnumMap<>(Ability.class);
@@ -42,6 +43,7 @@ public class Character {
     public Character(Character c) {
         name = c.name;
         wikiPage = c.wikiPage;
+        status = c.status;
         traits.addAll(c.traits);
         skills.clear();
         skills.addAll(c.skills);
@@ -90,6 +92,7 @@ public class Character {
 
         c.setString(Tags.name, name);
         c.setString(Tags.wiki, wikiPage);
+        c.setString(Tags.status, status);
         c.setIntArray(Tags.traits, traits.stream().filter(Objects::nonNull).mapToInt(t -> t.code).toArray());
 
         final int[] abilitiesArr = new int[Ability.values().length];
@@ -133,6 +136,7 @@ public class Character {
     public void fromNBT(NBTTagCompound c) {
         name = c.getString(Tags.name);
         wikiPage = c.getString(Tags.wiki);
+        status = c.getString(Tags.status);
         traits = Trait.decode(c.getIntArray(Tags.traits));
 
         final int[] abilitiesArr = c.getIntArray(Tags.abilities);
@@ -174,6 +178,7 @@ public class Character {
     private static class Tags {
         static final String name = "name";
         static final String wiki = "wiki";
+        static final String status = "status";
         static final String traits = "traits";
         static final String traumas = "traumas";
         static final String abilities = "abs";

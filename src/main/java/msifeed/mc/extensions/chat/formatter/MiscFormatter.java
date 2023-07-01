@@ -65,4 +65,13 @@ public final class MiscFormatter {
         cc.appendSibling(new ChatComponentText(text));
         return cc;
     }
+
+    public static IChatComponent formatShrimps(String prettyName, String text) {
+        final ChatComponentText cc = new ChatComponentText(String.format("[SHRIMPS %s] ", prettyName));
+        cc.getChatStyle().setColor(EnumChatFormatting.GOLD);
+        final ChatComponentText textComponent = new ChatComponentText(text);
+        textComponent.getChatStyle().setColor(EnumChatFormatting.WHITE);
+        cc.appendSibling(textComponent);
+        return cc;
+    }
 }

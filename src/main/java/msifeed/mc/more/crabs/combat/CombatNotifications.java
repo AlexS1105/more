@@ -17,6 +17,61 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class CombatNotifications {
+    public static void shrimpsAction(EntityPlayer sender, ShrimpsAction action) {
+        switch (action.type) {
+            case SKIP:
+                notifyShrimps(sender, L10n.fmt("more.shrimps.skip_turn"));
+                break;
+            case NARRATIVE:
+                notifyShrimps(sender, L10n.fmt("more.shrimps.narrative_action"));
+                break;
+            case REACTION:
+                if (!action.reaction.trim().isEmpty()) {
+                    notifyShrimps(sender, L10n.fmt("more.shrimps.reaction", action.reaction));
+                }
+                break;
+            case FULL:
+                if (!action.fullAction.trim().isEmpty()) {
+                    notifyShrimps(sender, L10n.fmt("more.shrimps.full_action", action.fullAction));
+                }
+                break;
+            case INITIATIVE:
+                if (!action.initiative.trim().isEmpty()) {
+                    notifyShrimps(sender, L10n.fmt("more.shrimps.initiative", action.initiative));
+                }
+                break;
+            case TURN:
+                notifyTurnActions(sender, action);
+                break;
+        }
+    }
+
+    private static void notifyTurnActions(EntityPlayer sender, ShrimpsAction action) {
+        boolean hasMainAction = !action.mainAction.trim().isEmpty();
+        boolean hasSecondaryAction = !action.secondaryAction.trim().isEmpty();
+        boolean hasSwiftAction = !action.swiftAction.trim().isEmpty();
+        boolean hasFreeAction = !action.freeAction.trim().isEmpty();
+
+        boolean hasFilledActions = hasMainAction || hasSecondaryAction || hasSwiftAction || hasFreeAction;
+        if (hasFilledActions) {
+            if (hasMainAction) {
+                notifyShrimps(sender, L10n.fmt("more.shrimps.main_action", action.mainAction));
+            }
+
+            if (hasSecondaryAction) {
+                notifyShrimps(sender, L10n.fmt("more.shrimps.secondary_action", action.secondaryAction));
+            }
+
+            if (hasSwiftAction) {
+                notifyShrimps(sender, L10n.fmt("more.shrimps.swift_action", action.swiftAction));
+            }
+
+            if (hasFreeAction) {
+                notifyShrimps(sender, L10n.fmt("more.shrimps.free_action", action.freeAction));
+            }
+        }
+    }
+
     public static void actionChanged(EntityPlayer sender, ActionHeader action) {
         notify(sender, "§fВыбрано действие " + action.getTitle());
     }
@@ -96,6 +151,12 @@ public final class CombatNotifications {
 
     public static String explicitSignInt(int i) {
         return String.format("%+d", i);
+    }
+
+    private static void notifyShrimps(EntityLivingBase entity, String text) {
+        final int range = More.DEFINES.get().chat.combatRadius;
+        SpeechatRpc.sendRaw(entity, range, MiscFormatter.formatShrimps(ChatUtils.getPrettyName(entity), text));
+        ExternalLogs.logEntity(entity, "combat", text);
     }
 
     private static void notify(EntityLivingBase entity, String text) {

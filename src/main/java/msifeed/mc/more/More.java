@@ -1,5 +1,6 @@
 package msifeed.mc.more;
 
+import com.google.gson.Gson;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
@@ -48,6 +49,7 @@ public class More {
             clientSide = "msifeed.mc.more.client.common.GuiHandlerClient"
     )
     public static GuiHandler GUI_HANDLER;
+    public static Gson GSON = new Gson();
     public static Defines DEFINES = new Defines();
     public static RpcChannel RPC = new RpcChannel(Bootstrap.MODID + ":rpc");
 
