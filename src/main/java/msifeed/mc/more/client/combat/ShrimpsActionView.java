@@ -96,12 +96,31 @@ public class ShrimpsActionView extends Widget {
         final ButtonMultiLabel narrativeButton = new ButtonMultiLabel(L10n.tr("more.gui.combat.shrimps.do_narrative_action"));
         narrativeButton.setClickCallback(() -> doNarrativeAction());
         addChild(narrativeButton);
+
+        addChild(new Separator());
+        addChild(new Separator());
+
+        addChild(new Label(L10n.tr("more.gui.combat.shrimps.initiative")));
+        final TextInput initiativeInput = new TextInput();
+        initiativeInput.getSizeHint().x = 50;
+        initiativeInput.setText(action.initiative);
+        initiativeInput.setCallback(s -> action.initiative = s);
+        addChild(initiativeInput);
+
+        final ButtonMultiLabel initiativeButton = new ButtonMultiLabel(L10n.tr("more.gui.combat.shrimps.do_initiative"));
+        initiativeButton.setClickCallback(() -> doInitiative());
+        addChild(initiativeButton);
     }
 
     private void reset() {
         action = new ShrimpsAction();
         clearChildren();
         refill();
+    }
+
+    private void doInitiative() {
+        action.type = ShrimpsAction.Type.INITIATIVE;
+        CombatRpc.doShrimpsAction(action);
     }
 
     private void doNarrativeAction() {
@@ -115,7 +134,7 @@ public class ShrimpsActionView extends Widget {
     }
 
     private void doReaction() {
-                action.type = ShrimpsAction.Type.REACTION;
+        action.type = ShrimpsAction.Type.REACTION;
         CombatRpc.doShrimpsAction(action);
     }
 

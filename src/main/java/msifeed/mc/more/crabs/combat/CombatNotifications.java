@@ -35,6 +35,11 @@ public final class CombatNotifications {
                     notifyShrimps(sender, L10n.fmt("more.shrimps.full_action", action.fullAction));
                 }
                 break;
+            case INITIATIVE:
+                if (!action.initiative.trim().isEmpty()) {
+                    notifyShrimps(sender, L10n.fmt("more.shrimps.initiative", action.initiative));
+                }
+                break;
             case TURN:
                 notifyTurnActions(sender, action);
                 break;

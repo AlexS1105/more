@@ -123,6 +123,7 @@ more.shrimps.skip_turn=§lПропуск хода
 more.shrimps.narrative_action=§lНарративное действие
 more.shrimps.reaction=§lРеакция:§r %s
 more.shrimps.full_action=§lПолное действие:§r %s
+more.shrimps.initiative=§lИнициатива:§r %s
 more.shrimps.main_action=§lОсновное действие:§r %s
 more.shrimps.secondary_action=§lЧастичное действие:§r %s
 more.shrimps.swift_action=§lБыстрое действие:§r %s
