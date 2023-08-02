@@ -181,12 +181,12 @@ more.trauma.short.debuff_burn=Ожог
 more.trauma.short.debuff_amnesia=Амнезия
 
 more.status.sin.0=Душа
-more.status.sin.1=Воплощение
+more.status.sin.1=Лярва
 more.status.sin.2=Эрос
-more.status.sin.3=Лярва
+more.status.sin.3=Абоминация
 more.status.sin.4=Абберация
-more.status.sin.5=Абоминация
-more.status.sin.6=Реликт
+more.status.sin.5=Воплощённый
+more.status.sin.6=Титул
 
 more.action.none=(Ничего)
 more.action.apply=(Применить)
