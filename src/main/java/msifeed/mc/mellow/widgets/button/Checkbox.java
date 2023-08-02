@@ -19,6 +19,7 @@ public class Checkbox extends Button {
     private Consumer<Boolean> onChange = b -> {};
 
     public Checkbox() {
+        Part offPart = getOffPart();
         setSizeHint(offPart.size.x, offPart.size.y);
         setSizePolicy(SizePolicy.Policy.FIXED, SizePolicy.Policy.FIXED);
         setZLevel(1);
@@ -32,6 +33,14 @@ public class Checkbox extends Button {
     public Checkbox(Checkbox.Group group) {
         this();
         setGroup(group);
+    }
+
+    public Part getOffPart() {
+        return offPart;
+    }
+
+    public Part getOnPart() {
+        return onPart;
     }
 
     public boolean isChecked() {
@@ -58,7 +67,7 @@ public class Checkbox extends Button {
 
     @Override
     protected void renderSelf() {
-        RenderParts.slice(isChecked() ? onPart : offPart, getGeometry());
+        RenderParts.slice(isChecked() ? getOnPart() : getOffPart(), getGeometry());
     }
 
     @Override

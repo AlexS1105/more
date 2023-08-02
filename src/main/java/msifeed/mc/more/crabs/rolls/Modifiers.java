@@ -1,9 +1,7 @@
 package msifeed.mc.more.crabs.rolls;
 
-import msifeed.mc.more.crabs.character.Ability;
+import msifeed.mc.more.crabs.character.*;
 import msifeed.mc.more.crabs.character.Character;
-import msifeed.mc.more.crabs.character.Skill;
-import msifeed.mc.more.crabs.character.Trauma;
 
 import java.util.*;
 
@@ -28,11 +26,16 @@ public class Modifiers {
         disabledSkills.addAll(m.disabledSkills);
     }
 
-    public void updateForTraumas(Character character) {
+    public void updateModifiers(Character character) {
         metaAbilities.clear();
         disabledSkills.clear();
         metaRoll = 0;
 
+        updateForTraumas(character);
+        updateForLimbs(character);
+    }
+
+    public void updateForTraumas(Character character) {
         for (Map.Entry<Trauma, Integer> entry : character.traumas.entrySet()) {
             Trauma trauma = entry.getKey();
             Integer traumaLevel = entry.getValue();
@@ -50,11 +53,25 @@ public class Modifiers {
         }
     }
 
+    public void updateForLimbs(Character character) {
+        for (Map.Entry<Limb, Integer> entry : character.limbs.entrySet()) {
+            Limb limb = entry.getKey();
+            Integer amount = entry.getValue();
+
+            int multiplier = 2 - amount;
+            if (multiplier > 0) {
+                int toAdd = -(3 * multiplier);
+                metaAbilities.compute(limb.affectedAbility, (k, v) -> v == null ? toAdd : v + toAdd);
+            }
+        }
+    }
+
     private void updateMetaAbilities(Trauma trauma, Integer traumaLevel) {
         String debuff = trauma.name().replace("DEBUFF_", "");
         try {
             Ability debuffedAbility = Ability.valueOf(debuff);
-            metaAbilities.put(debuffedAbility, -(traumaLevel * 2));
+            int toAdd = -(traumaLevel * 2);
+            metaAbilities.compute(debuffedAbility, (k, v) -> v == null ? toAdd : v + toAdd);
         } catch (IllegalArgumentException e) {
             // ignore
         }

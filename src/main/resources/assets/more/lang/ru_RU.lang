@@ -75,6 +75,9 @@ more.gui.status.status=Статус
 more.gui.status.status.estitence=Эститенция
 more.gui.status.status.sin=Серость
 more.gui.status.status.current_status=Состояние
+more.gui.status.status.intoxication=Интоксикация
+more.gui.status.status.attribution=Атрибуция
+more.gui.status.status.limbs=Конечности
 more.gui.status.illness=Болезнь
 more.gui.status.illness.cured=Болезнь излечена!
 more.gui.status.illness.lost=Болезнь победила!
@@ -87,7 +90,6 @@ more.gui.status.other=Прочее
 more.gui.status.other.name=Имя
 more.gui.status.other.wiki=Вики
 more.gui.status.other.visibleOnMap=Видимость на карте
-
 
 more.gui.combat=Боевка
 more.gui.combat.title=Боевка: %s
@@ -180,6 +182,21 @@ more.trauma.short.debuff_spr=Делирий
 more.trauma.short.debuff_burn=Ожог
 more.trauma.short.debuff_amnesia=Амнезия
 
+more.limb.hands=Руки
+more.limb.legs=Ноги
+more.limb.feelings=Чувства
+more.limb.organs=Органы
+
+more.limb.debuff.hands=- От потери Руки вы теряете возможность использовать один из своих хватов. Ваша Мощь уменьшается на 3.
+more.limb.debuff.hands.both=- От потери Рук вы теряете возможность использовать два из своих хватов. Ваша Мощь уменьшается на 6.
+more.limb.debuff.legs=- От потери Ноги дальность вашего Движения (любого вида) сокращается в два раза. Ваша Ловкость уменьшается на 3.
+more.limb.debuff.legs.both=- От потери Ног дальность вашего Движения (любого вида) сокращается в четыре раза. Ваша Ловкость уменьшается на 6.
+more.limb.debuff.feelings=- От потери Чувств вам запрещается пользоваться Особыми Атаками, а так же вы всегда ходите последним в Инициативе. Ваше Восприятие уменьшается на 3.
+more.limb.debuff.feelings.both=- От потери Чувств вам запрещается пользоваться любыми Атаками, а так же вы всегда ходите последним в Инициативе. Ваше Восприятие уменьшается на 6.
+more.limb.debuff.organs=- От потери Органов вам запрещается пользоваться Борьбой, Магией и Поддержкой. Ваше Телосложение уменьшается на 3.
+more.limb.debuff.organs.both=- От потери Органов вам запрещается пользоваться Борьбой, Магией, Поддержкой и Защитой. Ваше Телосложение уменьшается на 6.
+
+
 more.status.sin.0=Душа
 more.status.sin.1=Лярва
 more.status.sin.2=Эрос
@@ -229,6 +246,19 @@ more.diff.status.illness.4=пациент в нормальном состоян
 more.diff.status.illness.5=пациент в хорошем состоянии, он идет на поправку
 more.diff.status.illness.6=пациент в великолепном состоянии, болезнь уже отступает
 more.diff.status.illness.7=пациент настолько здоров, что здоровее, кажется, уже некуда
+
+more.diff.status.traumas.add_trauma=травма "%s" усугубляется на %d пунктов
+more.diff.status.traumas.rem_trauma=травма "%s" лечится на %d пунктов
+more.diff.status.traumas.zero=травма "%s" вылечена
+
+more.diff.status.intox.add_intox=интоксикация увеличивается на %d пунктов
+more.diff.status.intox.rem_intox=интоксикация уменьшается на %d пунктов
+
+more.diff.status.attrib.add_attrib=атрибуция увеличивается на %d пунктов
+more.diff.status.attrib.rem_attrib=атрибуция уменьшается на %d пунктов
+
+more.diff.status.limb.lost=потеряна конечность "%s"
+more.diff.status.limb.gained=получена конечность "%s"
 
 more.crabs.action_changed=Выбрано действие: %s
 more.crabs.knocked_out=%s теперь без сознания!

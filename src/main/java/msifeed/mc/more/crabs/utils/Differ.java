@@ -6,13 +6,19 @@ import msifeed.mc.extensions.chat.formatter.MiscFormatter;
 import msifeed.mc.more.More;
 import msifeed.mc.more.crabs.character.Ability;
 import msifeed.mc.more.crabs.character.Character;
+import msifeed.mc.more.crabs.character.Limb;
+import msifeed.mc.more.crabs.character.Trauma;
 import msifeed.mc.sys.utils.ChatUtils;
 import msifeed.mc.sys.utils.L10n;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 
 public class Differ {
     public static String diff(Character before, Character after) {
@@ -124,6 +130,76 @@ public class Differ {
         final int sinAfter = after.sinLevel();
         if (before.sinLevel() != sinAfter) {
             diffs.add(L10n.fmt("more.diff.status.sin_level", L10n.tr("more.status.sin." + sinAfter)));
+        }
+
+        for (Map.Entry<Trauma, Integer> e : before.traumas.entrySet()) {
+            Integer a = e.getValue();
+            Integer b = after.traumas.get(e.getKey());
+
+            if (!Objects.equals(a, b)) {
+                if (b == 0) {
+                    diffs.add(L10n.fmt("more.diff.status.traumas.zero", e.getKey().trShort()));
+                    continue;
+                }
+
+                final int n = Math.abs(a - b);
+                diffs.add(L10n.fmt(a < b
+                        ? "more.diff.status.traumas.add_trauma"
+                        : "more.diff.status.rem_trauma",
+                        e.getKey().trShort(), n));
+            }
+        }
+
+        int beforeIntox = 0;
+        int afterIntox = 0;
+        for (boolean b : before.intoxication) {
+            beforeIntox += b ? 1 : 0;
+        }
+        for (boolean b : after.intoxication) {
+            afterIntox += b ? 1 : 0;
+        }
+
+        if (beforeIntox != afterIntox) {
+            final int n = Math.abs(beforeIntox - afterIntox);
+            diffs.add(L10n.fmt(beforeIntox < afterIntox
+                    ? "more.diff.status.intox.add_intox"
+                    : "more.diff.status.intox.rem_intox",
+                    n));
+        }
+
+        int beforeAttrib = 0;
+        int afterAttrib = 0;
+        for (boolean b : before.attribution) {
+            beforeAttrib += b ? 1 : 0;
+        }
+        for (boolean b : after.attribution) {
+            afterAttrib += b ? 1 : 0;
+        }
+
+        if (beforeAttrib != afterAttrib) {
+            final int n = Math.abs(beforeAttrib - afterAttrib);
+            diffs.add(L10n.fmt(beforeAttrib < afterAttrib
+                    ? "more.diff.status.attrib.add_attrib"
+                    : "more.diff.status.attrib.rem_attrib",
+                    n));
+        }
+
+        for (Map.Entry<Limb, Integer> e : before.limbs.entrySet()) {
+            int a = e.getValue();
+            int b = after.limbs.get(e.getKey());
+
+            if (!Objects.equals(a, b)) {
+                String diff = L10n.fmt(a < b
+                        ? "more.diff.status.limb.gained"
+                        : "more.diff.status.limb.lost",
+                        e.getKey().tr());
+
+                if (Math.abs(a - b) == 2) {
+                    diff += " (x2)";
+                }
+
+                diffs.add(diff);
+            }
         }
 
         return String.join(", ", diffs);

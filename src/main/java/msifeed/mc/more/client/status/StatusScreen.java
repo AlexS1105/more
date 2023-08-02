@@ -1,19 +1,29 @@
 package msifeed.mc.more.client.status;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import msifeed.mc.mellow.layout.ListLayout;
 import msifeed.mc.mellow.mc.MellowGuiScreen;
 import msifeed.mc.mellow.widgets.Widget;
 import msifeed.mc.mellow.widgets.basic.Separator;
 import msifeed.mc.mellow.widgets.button.ButtonLabel;
 import msifeed.mc.mellow.widgets.tabs.TabArea;
+import msifeed.mc.mellow.widgets.text.Label;
 import msifeed.mc.mellow.widgets.window.Window;
 import msifeed.mc.more.crabs.character.CharRpc;
 import msifeed.mc.more.crabs.character.Character;
+import msifeed.mc.more.crabs.character.Limb;
+import msifeed.mc.more.crabs.meta.MetaRpc;
 import msifeed.mc.more.crabs.utils.CharacterAttribute;
+import msifeed.mc.more.crabs.utils.MetaAttribute;
 import msifeed.mc.sys.attributes.AttributeUpdateEvent;
 import msifeed.mc.sys.utils.L10n;
+import msifeed.mc.sys.utils.StringUtils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.common.MinecraftForge;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class StatusScreen extends MellowGuiScreen {
     private final EntityLivingBase entity;
@@ -59,13 +69,12 @@ public class StatusScreen extends MellowGuiScreen {
         content.clearChildren();
 
         final TabArea tabs = new TabArea();
-        final ParamsView paramsView = new ParamsView(entity, character, editable);
-        final IllnessView illnessView = new IllnessView(entity, character, isGm);
-        final EditAbilitiesView abilitiesView = new EditAbilitiesView(character, false);
+        final ParamsView paramsView = new ParamsView(entity, character, editable, isGm);
+        final IllnessView illnessView = new IllnessView(character, isGm);
+        final EditAbilitiesView abilitiesView = new EditAbilitiesView(character, isGm);
         final OtherView otherView = new OtherView(character, entity, editable);
 
-        if (editable)
-            tabs.addTab(L10n.tr("more.gui.status.status"), paramsView);
+        tabs.addTab(L10n.tr("more.gui.status.status"), paramsView);
         if (editable || character.illness.limit > 0)
             tabs.addTab(L10n.tr("more.gui.status.illness"), illnessView);
         if (editable || isGm)
@@ -73,21 +82,44 @@ public class StatusScreen extends MellowGuiScreen {
         tabs.addTab(L10n.tr("more.gui.status.other"), otherView);
         content.addChild(tabs);
 
-        if (editable) {
+        if (editable || isGm) {
             final ButtonLabel submitBtn = new ButtonLabel(L10n.tr("more.gui.apply"));
             submitBtn.setClickCallback(() -> {
                 if (!entity.isEntityAlive()) {
                     System.out.println("entity is actually dead");
-                    closeGui();
                 } else if (character != null) {
                     CharacterAttribute.INSTANCE.set(entity, character);
+                    MetaAttribute.get(entity).ifPresent((meta) -> {
+                        meta.modifiers.updateModifiers(character);
+                        MetaRpc.updateMeta(entity.getEntityId(), meta);
+                    });
                     CharRpc.updateChar(entity.getEntityId(), character);
                     paramsView.refill();
                     illnessView.refill();
                     abilitiesView.refill();
                     otherView.refill();
                 }
+
+                closeGui();
             });
+
+            List<String> debuffLines = new ArrayList<>();
+            for (Map.Entry<Limb, Integer> e : character.limbs.entrySet()) {
+                if (e.getValue() < 2) {
+                    String debuff = e.getKey().debuffTr(e.getValue() == 0);
+                    List<String> lines = StringUtils.splitString(debuff, 70);
+                    debuffLines.addAll(lines);
+                }
+            }
+
+            if (!debuffLines.isEmpty()) {
+                content.addChild(new Separator());
+                final Widget debuffsWidget = new Widget();
+                debuffsWidget.setLayout(new ListLayout(ListLayout.Direction.VERTICAL, 0));
+                debuffLines.forEach(l -> debuffsWidget.addChild(new Label(l)));
+                content.addChild(debuffsWidget);
+            }
+
             content.addChild(new Separator());
             content.addChild(submitBtn);
         }
