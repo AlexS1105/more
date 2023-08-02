@@ -88,15 +88,13 @@ class IllnessView extends Widget {
         treatmentInput.setText(String.valueOf(character.illness.treatment));
         params.addChild(treatmentInput);
 
-        if (gmEditor) {
-            addChild(new Separator());
-            final Widget traumas = new Widget();
-            traumas.setLayout(new GridLayout(3));
-            addChild(traumas);
+        addChild(new Separator());
+        final Widget traumas = new Widget();
+        traumas.setLayout(new GridLayout(3));
+        addChild(traumas);
 
-            for (Trauma t : Trauma.values()) {
-                addTraumaParam(traumas, character, t, true);
-            }
+        for (Trauma t : Trauma.values()) {
+            addTraumaParam(traumas, character, t, true);
         }
     }
 
@@ -144,20 +142,14 @@ class IllnessView extends Widget {
 
         final int traumaValue = character.traumas.getOrDefault(trauma, 0);
 
-        if (editable) {
-            final TextInput input = new TextInput();
-            input.getSizeHint().x = 16;
+        final TextInput input = new TextInput();
+        input.getSizeHint().x = 16;
 
-            input.setText(Integer.toString(traumaValue));
-            input.setFilter(s -> TextInput.isSignedIntBetween(s, 0, 99));
-            input.setCallback(s -> {
-                character.traumas.put(trauma, s.isEmpty() ? 0 : Integer.parseInt(s));
-            });
-            pair.addChild(input);
-        } else {
-            final Label valueLabel = new Label(Integer.toString(traumaValue));
-            valueLabel.getSizeHint().x = 16;
-            pair.addChild(valueLabel);
-        }
+        input.setText(Integer.toString(traumaValue));
+        input.setFilter(s -> TextInput.isSignedIntBetween(s, gmEditor ? 0 : traumaValue, 99));
+        input.setCallback(s -> {
+            character.traumas.put(trauma, s.isEmpty() ? 0 : Integer.parseInt(s));
+        });
+        pair.addChild(input);
     }
 }

@@ -145,7 +145,7 @@ public class Differ {
                 final int n = Math.abs(a - b);
                 diffs.add(L10n.fmt(a < b
                         ? "more.diff.status.traumas.add_trauma"
-                        : "more.diff.status.rem_trauma",
+                        : "more.diff.status.traumas.rem_trauma",
                         e.getKey().trShort(), n));
             }
         }
