@@ -1,11 +1,18 @@
 package msifeed.mc.more.crabs.character;
 
+import com.google.common.collect.Lists;
 import msifeed.mc.commons.traits.Trait;
 import msifeed.mc.more.More;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import org.apache.commons.lang3.ArrayUtils;
+import scala.Int;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static msifeed.mc.sys.utils.NBTUtils.packBooleanList;
+import static msifeed.mc.sys.utils.NBTUtils.unpackBooleanList;
 
 public class Character {
     public String name = "";
@@ -16,6 +23,10 @@ public class Character {
     public EnumMap<Ability, Integer> abilities = new EnumMap<>(Ability.class);
     public Illness illness = new Illness();
     public EnumMap<Trauma, Integer> traumas = new EnumMap<>(Trauma.class);
+
+    public List<Boolean> intoxication = Lists.newArrayList(false, false);
+    public List<Boolean> attribution = Lists.newArrayList(false, false);
+    public EnumMap<Limb, Integer> limbs = new EnumMap<>(Limb.class);
 
     public int fistsDamage = 0;
     public int armor = 0;
@@ -38,6 +49,8 @@ public class Character {
             abilities.put(f, 7);
         for (Trauma t : Trauma.values())
             traumas.put(t, 0);
+        for (Limb l : Limb.values())
+            limbs.put(l, 2);
     }
 
     public Character(Character c) {
@@ -49,7 +62,12 @@ public class Character {
         skills.addAll(c.skills);
         abilities.putAll(c.abilities);
         traumas.putAll(c.traumas);
+        limbs.putAll(c.limbs);
         illness.unpack(c.illness.pack());
+        intoxication.clear();
+        intoxication.addAll(c.intoxication);
+        attribution.clear();
+        attribution.addAll(c.attribution);
         fistsDamage = c.fistsDamage;
         armor = c.armor;
         damageThreshold = c.damageThreshold;
@@ -106,6 +124,15 @@ public class Character {
         }
         c.setIntArray(Tags.traumas, traumasArr);
 
+        final int[] limbsArr = new int[Limb.values().length];
+        for (Limb l : Limb.values()) {
+            limbsArr[l.ordinal()] = limbs.getOrDefault(l, 2);
+        }
+        c.setIntArray(Tags.limbs, limbsArr);
+
+        c.setByteArray(Tags.intoxication, packBooleanList(intoxication));
+        c.setByteArray(Tags.attribution, packBooleanList(attribution));
+
         c.setInteger(Tags.illness, illness.pack());
 
         c.setInteger(Tags.fistsDmg, fistsDamage);
@@ -149,6 +176,14 @@ public class Character {
             traumas.put(t, traumasArr[t.ordinal()]);
         }
 
+        final int[] limbsArr = c.getIntArray(Tags.limbs);
+        for (Limb l : Limb.values()) {
+            limbs.put(l, limbsArr[l.ordinal()]);
+        }
+
+        intoxication = unpackBooleanList(c.getByteArray(Tags.intoxication));
+        attribution = unpackBooleanList(c.getByteArray(Tags.attribution));
+
         illness.unpack(c.getInteger(Tags.illness));
 
         fistsDamage = c.getInteger(Tags.fistsDmg);
@@ -181,6 +216,9 @@ public class Character {
         static final String status = "status";
         static final String traits = "traits";
         static final String traumas = "traumas";
+        static final String limbs = "limbs";
+        static final String intoxication = "intoxication";
+        static final String attribution = "attribution";
         static final String abilities = "abs";
         static final String illness = "illness";
         static final String fistsDmg = "fistsDmg";

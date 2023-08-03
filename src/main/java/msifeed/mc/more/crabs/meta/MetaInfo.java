@@ -34,13 +34,13 @@ public class MetaInfo {
 
         final Ability[] feats = Ability.values();
         final int[] featsArray = new int[feats.length];
-        final int[] traumasArray = new int[feats.length];
+        final int[] metaArray = new int[feats.length];
         for (int i = 0; i < feats.length; i++) {
             featsArray[i] = modifiers.customToAbility(feats[i]);
-            traumasArray[i] = modifiers.metaToAbility(feats[i]);
+            metaArray[i] = modifiers.metaToAbility(feats[i]);
         }
         c.setIntArray("fmod", featsArray);
-        c.setIntArray("tmod", traumasArray);
+        c.setIntArray("tmod", metaArray);
 
         NBTTagList skillList = new NBTTagList();
         for (Skill disabledSkill : modifiers.disabledSkills) {
@@ -61,9 +61,9 @@ public class MetaInfo {
         modifiers.abilities.clear();
         final Ability[] feats = Ability.values();
         final int[] featsArray = c.getIntArray("fmod");
-        final int[] traumasArray = c.getIntArray("tmod");
+        final int[] metaArray = c.getIntArray("tmod");
         for (int i = 0; i < feats.length; i++) {
-            modifiers.metaAbilities.put(feats[i], traumasArray[i]);
+            modifiers.metaAbilities.put(feats[i], metaArray[i]);
             modifiers.abilities.put(feats[i], featsArray[i]);
         }
 

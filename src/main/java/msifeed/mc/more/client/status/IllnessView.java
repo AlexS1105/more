@@ -9,19 +9,15 @@ import msifeed.mc.mellow.widgets.text.Label;
 import msifeed.mc.mellow.widgets.text.TextInput;
 import msifeed.mc.more.crabs.character.Character;
 import msifeed.mc.more.crabs.character.Trauma;
-import msifeed.mc.more.crabs.meta.MetaInfo;
-import msifeed.mc.more.crabs.meta.MetaRpc;
 import msifeed.mc.more.crabs.utils.MetaAttribute;
 import msifeed.mc.sys.utils.L10n;
 import net.minecraft.entity.EntityLivingBase;
 
 class IllnessView extends Widget {
-    private final EntityLivingBase entity;
     private final Character character;
     private final boolean gmEditor;
 
-    IllnessView(EntityLivingBase entity, Character character, boolean gmEditor) {
-        this.entity = entity;
+    IllnessView(Character character, boolean gmEditor) {
         this.character = character;
         this.gmEditor = gmEditor;
         refill();
@@ -92,17 +88,13 @@ class IllnessView extends Widget {
         treatmentInput.setText(String.valueOf(character.illness.treatment));
         params.addChild(treatmentInput);
 
-        if (gmEditor) {
-            MetaAttribute.get(entity).ifPresent(meta -> {
-                addChild(new Separator());
-                final Widget traumas = new Widget();
-                traumas.setLayout(new GridLayout(3));
-                addChild(traumas);
+        addChild(new Separator());
+        final Widget traumas = new Widget();
+        traumas.setLayout(new GridLayout(3));
+        addChild(traumas);
 
-                for (Trauma t : Trauma.values()) {
-                    addTraumaParam(traumas, character, t, true, meta);
-                }
-            });
+        for (Trauma t : Trauma.values()) {
+            addTraumaParam(traumas, character, t, true);
         }
     }
 
@@ -134,11 +126,11 @@ class IllnessView extends Widget {
 
 
         for (Trauma t : Trauma.values()) {
-            addTraumaParam(this, character, t, gmEditor, null);
+            addTraumaParam(this, character, t, gmEditor);
         }
     }
 
-    private void addTraumaParam(Widget traumas, Character character, Trauma trauma, boolean editable, MetaInfo meta) {
+    private void addTraumaParam(Widget traumas, Character character, Trauma trauma, boolean editable) {
         final Widget pair = new Widget();
         pair.setLayout(ListLayout.HORIZONTAL);
         traumas.addChild(pair);
@@ -150,22 +142,14 @@ class IllnessView extends Widget {
 
         final int traumaValue = character.traumas.getOrDefault(trauma, 0);
 
-        if (editable) {
-            final TextInput input = new TextInput();
-            input.getSizeHint().x = 16;
+        final TextInput input = new TextInput();
+        input.getSizeHint().x = 16;
 
-            input.setText(Integer.toString(traumaValue));
-            input.setFilter(s -> TextInput.isSignedIntBetween(s, 0, 99));
-            input.setCallback(s -> {
-                character.traumas.put(trauma, s.isEmpty() ? 0 : Integer.parseInt(s));
-                meta.modifiers.updateForTraumas(character);
-                MetaRpc.updateMeta(entity.getEntityId(), meta);
-            });
-            pair.addChild(input);
-        } else {
-            final Label valueLabel = new Label(Integer.toString(traumaValue));
-            valueLabel.getSizeHint().x = 16;
-            pair.addChild(valueLabel);
-        }
+        input.setText(Integer.toString(traumaValue));
+        input.setFilter(s -> TextInput.isSignedIntBetween(s, gmEditor ? 0 : traumaValue, 99));
+        input.setCallback(s -> {
+            character.traumas.put(trauma, s.isEmpty() ? 0 : Integer.parseInt(s));
+        });
+        pair.addChild(input);
     }
 }
