@@ -146,9 +146,10 @@ class IllnessView extends Widget {
         input.getSizeHint().x = 16;
 
         input.setText(Integer.toString(traumaValue));
-        input.setFilter(s -> TextInput.isSignedIntBetween(s, gmEditor ? 0 : traumaValue, 99));
+        input.setFilter(s -> TextInput.isSignedIntBetween(s, 0, 99));
         input.setCallback(s -> {
-            character.traumas.put(trauma, s.isEmpty() ? 0 : Integer.parseInt(s));
+            int value = s.isEmpty() ? 0 : Integer.parseInt(s);
+            character.traumas.put(trauma, gmEditor ? value : Math.max(value, traumaValue));
         });
         pair.addChild(input);
     }
