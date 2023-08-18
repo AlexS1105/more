@@ -26,7 +26,7 @@ public enum RenameRpc {
         More.RPC.register(INSTANCE);
     }
 
-    public static void rename(String title, List<String> desc) {
+    public static void rename(String title, List<String> desc, boolean isGm) {
         final NBTTagCompound nbt = new NBTTagCompound();
         if (!title.isEmpty())
             nbt.setString("t", title);
@@ -35,6 +35,8 @@ public enum RenameRpc {
         for (String l : desc)
             descNbt.appendTag(new NBTTagString(ChatUtils.fromAmpersandFormatting("\u00A7r" + l)));
         nbt.setTag("d", descNbt);
+
+        nbt.setBoolean("verified", isGm);
 
         More.RPC.sendToServer(rename, nbt);
     }
@@ -46,8 +48,14 @@ public enum RenameRpc {
         if (itemStack == null)
             return;
 
-        if (nbt.hasKey("t"))
-            RenameProvider.setTitle(itemStack, nbt.getString("t"));
+        if (nbt.hasKey("t")) {
+            boolean verified = nbt.getBoolean("verified");
+            String title = nbt.getString("t");
+            if (!verified) {
+                title += " &9[?]";
+            }
+            RenameProvider.setTitle(itemStack, title);
+        }
         if (nbt.hasKey("d"))
             RenameProvider.setDescription(itemStack, nbt.getTagList("d", 8)); // 8 - string
     }

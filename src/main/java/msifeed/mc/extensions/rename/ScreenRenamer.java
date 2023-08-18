@@ -62,7 +62,8 @@ public class ScreenRenamer extends MellowGuiScreen {
         renameTab.addChild(new Label(L10n.tr("more.gui.renamer.title")));
         renameTab.addChild(titleInput);
         titleInput.setMaxLineWidth(200);
-        titleInput.setText(ChatUtils.intoAmpersandFormatting(heldItem.getDisplayName()));
+        String displayName = ChatUtils.intoAmpersandFormatting(heldItem.getDisplayName()).replace(" &9[?]", "");
+        titleInput.setText(displayName);
         titleInput.setFilter(s -> !s.startsWith(" "));
 
         renameTab.addChild(new Label(L10n.tr("more.gui.renamer.desc")));
@@ -84,7 +85,8 @@ public class ScreenRenamer extends MellowGuiScreen {
                 titleInput.getText(),
                 descInput.toLineStream()
                         .map(ChatUtils::fromAmpersandFormatting)
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toList()),
+                isGm
         ));
         footer.addChild(applyBtn);
 
