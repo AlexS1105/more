@@ -74,6 +74,11 @@ public class MorphScreen extends MellowGuiScreen {
             }
         }
 
+        final Button submitBtn = getSubmitButton();
+        mainColumn.addChild(submitBtn);
+    }
+
+    private Button getSubmitButton() {
         final Button submitBtn = new ButtonLabel("Submit");
         submitBtn.setClickCallback(() -> {
             if (character != null && metaInfo != null) {
@@ -87,7 +92,7 @@ public class MorphScreen extends MellowGuiScreen {
                 CharRpc.clearEntity(entity.getEntityId());
             }
         });
-        mainColumn.addChild(submitBtn);
+        return submitBtn;
     }
 
     @Override

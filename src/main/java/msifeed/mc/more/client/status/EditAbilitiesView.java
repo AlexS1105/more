@@ -76,8 +76,18 @@ public class EditAbilitiesView extends Widget {
 
         final int abilityValue = character.abilities.getOrDefault(a, 0);
 
-        final Label valueLabel = new Label(Integer.toString(abilityValue));
-        valueLabel.getSizeHint().x = 16;
-        pair.addChild(valueLabel);
+        if (this.isGm) {
+            final TextInput input = new TextInput();
+            input.getSizeHint().x = 16;
+
+            input.setText(Integer.toString(abilityValue));
+            input.setFilter(s -> TextInput.isSignedIntBetween(s, 1, 99));
+            input.setCallback(s -> character.abilities.put(a, s.isEmpty() ? 1 : Integer.parseInt(s)));
+            pair.addChild(input);
+        } else {
+            final Label valueLabel = new Label(Integer.toString(abilityValue));
+            valueLabel.getSizeHint().x = 16;
+            pair.addChild(valueLabel);
+        }
     }
 }
