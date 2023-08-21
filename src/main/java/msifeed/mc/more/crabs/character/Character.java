@@ -130,8 +130,8 @@ public class Character {
         }
         c.setIntArray(Tags.limbs, limbsArr);
 
-        c.setByteArray(Tags.intoxication, packBooleanList(intoxication));
-        c.setByteArray(Tags.attribution, packBooleanList(attribution));
+        c.setIntArray(Tags.intoxication, packBooleanList(intoxication));
+        c.setIntArray(Tags.attribution, packBooleanList(attribution));
 
         c.setInteger(Tags.illness, illness.pack());
 
@@ -181,8 +181,8 @@ public class Character {
             limbs.put(l, limbsArr[l.ordinal()]);
         }
 
-        intoxication = unpackBooleanList(c.getByteArray(Tags.intoxication));
-        attribution = unpackBooleanList(c.getByteArray(Tags.attribution));
+        intoxication = unpackBooleanList(c.getIntArray(Tags.intoxication));
+        attribution = unpackBooleanList(c.getIntArray(Tags.attribution));
 
         illness.unpack(c.getInteger(Tags.illness));
 
