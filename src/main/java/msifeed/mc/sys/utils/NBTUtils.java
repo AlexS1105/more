@@ -19,20 +19,20 @@ public final class NBTUtils {
         return ItemStack.loadItemStackFromNBT(tag);
     }
 
-    public static byte[] packBooleanList(List<Boolean> list) {
-        byte[] result = new byte[list.size()];
+    public static int[] packBooleanList(List<Boolean> list) {
+        int[] result = new int[list.size()];
 
         for (int i = 0; i < list.size(); i++) {
-            result[i] = (byte) (list.get(i) ? 1 : 0);
+            result[i] = list.get(i) ? 1 : 0;
         }
 
         return result;
     }
 
-    public static List<Boolean> unpackBooleanList(byte[] bytes) {
+    public static List<Boolean> unpackBooleanList(int[] bytes) {
         List<Boolean> result = new ArrayList<>(bytes.length);
 
-        for (byte b : bytes) {
+        for (int b : bytes) {
             result.add(b == 1);
         }
 
