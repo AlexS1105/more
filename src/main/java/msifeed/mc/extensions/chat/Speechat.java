@@ -47,7 +47,8 @@ public class Speechat {
                 ExternalLogs.log(event.player, "gm", text.getUnformattedText());
             } else {
                 final int range = SpeechFormatter.getSpeechRange(text.getUnformattedText());
-                SpeechatRpc.sendSpeech(event.player, range, text);
+                final String formatted = ChatUtils.fromAmpersandFormatting(event.message);
+                SpeechatRpc.sendSpeech(event.player, range, new ChatComponentText(formatted));
                 ExternalLogs.log(event.player, "speech", text.getUnformattedText());
             }
         }
