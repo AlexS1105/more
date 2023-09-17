@@ -28,6 +28,8 @@ public class Speechat {
     public static void registerCommands(CommandHandler handler) {
         handler.registerCommand(new WhisperCommand());
         handler.registerCommand(new YellCommand());
+        handler.registerCommand(new ShoutCommand());
+        handler.registerCommand(new HalfWhisperCommand());
         handler.registerCommand(new OfftopCommand());
         handler.registerCommand(new GlobalCommand());
         handler.registerCommand(new GmSayCommand());

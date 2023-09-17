@@ -28,16 +28,48 @@ public final class SpeechFormatter {
             textCC = makeTextCC(cc, distance, range);
         }
 
+        if (textCC.getUnformattedText().trim().isEmpty()) {
+            return new ChatComponentText("");
+        }
+
         return new ChatComponentTranslation(
                 "more.speechat.msg",
-                makeNamePrefix(sender, isMyMessage), textCC
+                makeNamePrefix(self, sender), textCC
         );
     }
 
-    private static IChatComponent makeNamePrefix(EntityPlayer player, boolean isMyName) {
-        final IChatComponent cc = new ChatComponentText(ChatUtils.getPrettyName(player));
-        cc.getChatStyle().setColor(isMyName ? EnumChatFormatting.YELLOW : EnumChatFormatting.GREEN);
-        return cc;
+    private static IChatComponent makeNamePrefix(EntityPlayer currentPlayer, EntityPlayer messageSender) {
+        final IChatComponent chatComponent = new ChatComponentText(ChatUtils.getPrettyName(currentPlayer));
+        boolean isSamePlayer = currentPlayer.getEntityId() == messageSender.getEntityId();
+        if (isSamePlayer) {
+            chatComponent.getChatStyle().setColor(EnumChatFormatting.YELLOW);
+            return chatComponent;
+        }
+
+        Vec3 currentPlayerLookVector = currentPlayer.getLook(1.0F).normalize();
+        Vec3 vectorFromCurrentToSender = Vec3.createVectorHelper(messageSender.posX - currentPlayer.posX,
+                messageSender.posY + messageSender.getEyeHeight() / 2 - currentPlayer.posY + currentPlayer.getEyeHeight(),
+                messageSender.posZ - currentPlayer.posZ);
+        vectorFromCurrentToSender = vectorFromCurrentToSender.normalize();
+        double dotProductCurrent = currentPlayerLookVector.dotProduct(vectorFromCurrentToSender);
+
+        Vec3 senderLookVector = messageSender.getLookVec();
+        Vec3 vectorFromSenderToCurrent = Vec3.createVectorHelper(currentPlayer.posX - messageSender.posX,
+                currentPlayer.posY - currentPlayer.getEyeHeight() / 2 - messageSender.posY - messageSender.getEyeHeight(),
+                currentPlayer.posZ - messageSender.posZ);
+        vectorFromSenderToCurrent = vectorFromSenderToCurrent.normalize();
+        double dotProductSender = senderLookVector.dotProduct(vectorFromSenderToCurrent);
+
+        double threshold = 0.9935D;
+        if (dotProductCurrent > threshold && currentPlayer.canEntityBeSeen(messageSender)) {
+            chatComponent.getChatStyle().setColor(EnumChatFormatting.GOLD);
+        } else if (dotProductSender > threshold && messageSender.canEntityBeSeen(currentPlayer)) {
+            chatComponent.getChatStyle().setColor(EnumChatFormatting.AQUA);
+        } else {
+            chatComponent.getChatStyle().setColor(EnumChatFormatting.GREEN);
+        }
+
+        return chatComponent;
     }
 
     private static IChatComponent makeTextCC(IChatComponent cc, double distance, int range) {
