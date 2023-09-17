@@ -4,14 +4,23 @@ import msifeed.mc.commons.logs.ExternalLogs;
 import msifeed.mc.extensions.chat.SpeechatRpc;
 import msifeed.mc.more.More;
 import msifeed.mc.sys.cmd.PlayerExtCommand;
+import msifeed.mc.sys.utils.ChatUtils;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentText;
+
+import java.util.Collections;
+import java.util.List;
 
 public class YellCommand extends PlayerExtCommand {
     @Override
     public String getCommandName() {
         return "yell";
+    }
+
+    @Override
+    public List<String> getCommandAliases() {
+        return Collections.singletonList("y");
     }
 
     @Override
@@ -30,7 +39,7 @@ public class YellCommand extends PlayerExtCommand {
 
         final EntityPlayerMP player = (EntityPlayerMP) sender;
         final String text = String.join(" ", args);
-        SpeechatRpc.sendSpeech(player, range, new ChatComponentText(text));
+        SpeechatRpc.sendSpeech(player, range, new ChatComponentText(ChatUtils.fromAmpersandFormatting(text)));
         ExternalLogs.log(sender, "speech",  text);
     }
 }

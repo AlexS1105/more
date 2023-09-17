@@ -22,7 +22,12 @@ final class SpeechatClient {
         if (sender == null)
             return;
 
-        self.addChatMessage(SpeechFormatter.format(self, sender, cc, range));
+        IChatComponent component = SpeechFormatter.format(self, sender, cc, range);
+        if (component.getUnformattedText().trim().isEmpty()) {
+            return;
+        }
+
+        self.addChatMessage(component);
         playNotificationSound(sender);
     }
 

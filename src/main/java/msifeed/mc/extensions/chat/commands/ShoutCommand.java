@@ -12,20 +12,20 @@ import net.minecraft.util.ChatComponentText;
 import java.util.Collections;
 import java.util.List;
 
-public class WhisperCommand extends PlayerExtCommand {
+public class ShoutCommand extends PlayerExtCommand {
     @Override
     public String getCommandName() {
-        return "whisper";
-    }
-
-    @Override
-    public String getCommandUsage(ICommandSender sender) {
-        return "/whisper <text>";
+        return "shout";
     }
 
     @Override
     public List<String> getCommandAliases() {
-        return Collections.singletonList("wh");
+        return Collections.singletonList("sh");
+    }
+
+    @Override
+    public String getCommandUsage(ICommandSender sender) {
+        return "/shout <text>";
     }
 
     @Override
@@ -34,11 +34,11 @@ public class WhisperCommand extends PlayerExtCommand {
             return;
 
         final int[] ranges = More.DEFINES.get().chat.speechRadius;
-        final int rangeLevel = -2;
+        final int rangeLevel = +2;
         final int range = ranges[(ranges.length - 1) / 2 + rangeLevel];
 
         final EntityPlayerMP player = (EntityPlayerMP) sender;
-        final String text = "((" + String.join(" ", args) + "))";
+        final String text = String.join(" ", args);
         SpeechatRpc.sendSpeech(player, range, new ChatComponentText(ChatUtils.fromAmpersandFormatting(text)));
         ExternalLogs.log(sender, "speech",  text);
     }
