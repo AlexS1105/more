@@ -39,7 +39,7 @@ public final class SpeechFormatter {
     }
 
     private static IChatComponent makeNamePrefix(EntityPlayer currentPlayer, EntityPlayer messageSender) {
-        final IChatComponent chatComponent = new ChatComponentText(ChatUtils.getPrettyName(currentPlayer));
+        final IChatComponent chatComponent = new ChatComponentText(ChatUtils.getPrettyName(messageSender));
         boolean isSamePlayer = currentPlayer.getEntityId() == messageSender.getEntityId();
         if (isSamePlayer) {
             chatComponent.getChatStyle().setColor(EnumChatFormatting.YELLOW);
